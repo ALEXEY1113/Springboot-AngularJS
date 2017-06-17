@@ -1,0 +1,17 @@
+{
+  "name": "Final Project",
+  "version": "1.0.0",
+  "description": "Final Project Course Fullstack - Java Springboot with AngularJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+},
+  "author": "Ronald Peña Angulo",
+  "license": "ISC",
+  "devDependencies": {
+  "browser-sync": "^2.18.12",
+  "gulp": "^3.9.1",
+  "run-sequence": "^1.2.2",
+  "wiredep": "^4.0.0"
+  }
+}
