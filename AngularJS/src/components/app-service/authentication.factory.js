@@ -3,10 +3,10 @@
 
   angular
     .module('course')
-    .factory('userFactory', UserFactory);
+    .factory('authenticationFactory', AuthenticationFactory);
 
-  UserFactory.$inject = ['$http', '$q'];
-  function UserFactory($http, $q) {
+  AuthenticationFactory.$inject = ['$http', '$q'];
+  function AuthenticationFactory($http, $q) {
     var service = {
       getByUsername : getByUsername
     };
@@ -15,12 +15,14 @@
 
     ////////////////
     function getByUsername(username) {
+      return $http.get('http://localhost:8080/login/' + username)
+                    .then(function(user) {
+                      return user;
+                    },
+                    function(err) {
+                      return null;
+                    });
       /*
-      return $http.get('/api/users/' + username)
-                    .then(handleSuccess, handleError('Error getting user by username'));*/
-      // var response = { username: 'Bob', password: '1234' };
-      // return response;
-
       console.log('USRFACTORY: ', username);
 
       var deferred = $q.defer();
@@ -34,7 +36,7 @@
       console.log('USRFILTERED: ', user);
 
       deferred.resolve(user);
-      return deferred.promise;
+      return deferred.promise;*/
     }
   }
 })();

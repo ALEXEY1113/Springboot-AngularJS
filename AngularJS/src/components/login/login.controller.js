@@ -28,7 +28,7 @@
           if (response.success) {
             console.log('2doResponse: ', response);
             // LoginFactory.setCredentials(vm.email.password);
-            $location.path('/users');
+            $location.path('/admin-control');
             return false;
           } else {
             vm.displayMessage = true;

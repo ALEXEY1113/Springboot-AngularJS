@@ -5,8 +5,8 @@
     .module('course')
     .factory('loginFactory', LoginFactory);
 
-  LoginFactory.$inject = ['$http', 'userFactory'];
-  function LoginFactory($http, userFactory) {
+  LoginFactory.$inject = ['$http', 'authenticationFactory'];
+  function LoginFactory($http, authenticationFactory) {
     var service = {
       loginUser : loginUser/*,
       setCredentials : setCredentials,
@@ -19,10 +19,10 @@
     ////////////////
     function loginUser(username, password, callback) {
       var response;
-        userFactory.getByUsername(username)
+        authenticationFactory.getByUsername(username)
           .then(function (user) {
             console.log('USER: ', user);
-            if (user) {
+            if (user.data !== '' && user.data.password === password) {
               response = { success: true };
             } else {
               response = { success: false, message: 'Username or Password is incorrect.' };

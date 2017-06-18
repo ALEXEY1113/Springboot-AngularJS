@@ -21,12 +21,16 @@
         <script type="text/javascript" src="course.module.js" ></script>
         <!--Routes-->
         <script type="text/javascript" src="course.route.js" ></script>
+        <!--App-Services-->
+        <script type="text/javascript" src="components/app-service/authentication.factory.js" ></script>
         <!--Login-->
         <script type="text/javascript" src="components/login/login.component.js" ></script>
         <script type="text/javascript" src="components/login/login.controller.js" ></script>
         <script type="text/javascript" src="components/login/login.factory.js" ></script>
-        <!--App-Services-->
-        <script type="text/javascript" src="components/app-service/user.factory.js" ></script>
+        <!--Admin-Control-->
+        <script type="text/javascript" src="components/admin-control/admin-control.component.js" ></script>
+        <script type="text/javascript" src="components/admin-control/admin-control.controller.js" ></script>
+        <!--<script type="text/javascript" src="components/login/login.factory.js" ></script>-->
         <!--User Table-->
         <script type="text/javascript" src="components/user-table/user-table.component.js" ></script>
         <script type="text/javascript" src="components/user-table/user-table.controller.js" ></script>
@@ -37,7 +41,39 @@
         
     </head>
     <body>
+        <!--Navbar-->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="" alt="Logo">
+                </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Coursers</a></li>
+                    <li><a href="#">Teachers</a></li>
+                    <li><a href="#">Studens</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+
         <!--Injection for Router-->
         <ui-view></ui-view>
+
+        <!--Footer-->
+        <!--<footer class="container-fluid text-center">
+            <p> Copyrigths Reserved 2017 </p>
+        </footer>-->
     </body>
 </html>

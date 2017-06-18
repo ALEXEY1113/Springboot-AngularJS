@@ -12,9 +12,30 @@
       url: '/login',
       templateUrl: 'views/login.view.html'
     })
-    .state('users', {
-      url: '/users',
+
+    .state('students', {
+      url: '/students',
       templateUrl: 'views/user.view.html'
+    })
+
+    .state('teachers', {
+      url: '/teachers',
+      templateUrl: 'views/teacher.view.html'
+    })
+    
+    .state('courses', {
+      url: '/courses',
+      templateUrl: 'views/course.view.html'
+    })
+    
+    .state('tasks', {
+      url: '/tasks',
+      templateUrl: 'views/task.view.html'
+    })
+    
+    .state('admin-control', {
+      url: '/admin-control',
+      templateUrl: 'views/admin.view.html'
     });
   });
 })();
