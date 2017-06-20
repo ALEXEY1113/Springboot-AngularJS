@@ -1,6 +1,8 @@
 package com.dh.finalproject.service;
 
 import com.dh.finalproject.domain.Student;
+import com.dh.finalproject.domain.SubscriptionStudents;
+import com.dh.finalproject.domain.SubscriptionTasks;
 import com.dh.finalproject.repository.StudentRepository;
 import com.dh.finalproject.repository.SubscriptionStudentRepository;
 import com.dh.finalproject.repository.SubscriptionTaskRepository;
@@ -43,9 +45,17 @@ public class StudentService {
     }
 
     public void deleteStudent(String idStudent) {
-        this.mStudentRepository.delete(idStudent);
-        this.mSubStudentRepository.deleteMany(idStudent);
-        this.mSubTaskRepository.deleteMany(idStudent);
+
+        Student student = mStudentRepository.findOne(idStudent);
+        if (student != null) {
+            mStudentRepository.delete(idStudent);
+            List<SubscriptionStudents> subscriptionStudents = mSubStudentRepository.findAll();
+            List<SubscriptionTasks> subscriptionTasks = mSubTaskRepository.findAll();
+
+            // Delete from other tables
+            deleteSubStudent(idStudent, subscriptionStudents);
+            deleteSubTask(idStudent, subscriptionTasks);
+        }
     }
 
     public void updateStudent(String idStudent, StudentController.RequestStudentDTO updStudentDTO) {
@@ -69,5 +79,26 @@ public class StudentService {
         student.setAddress(studentDTO.getAddress());
         student.setPhone(studentDTO.getPhone());
         return student;
+    }
+
+    private void deleteSubStudent(String idStudent, List<SubscriptionStudents> subsStudents) {
+
+        for (int i = 0; i < subsStudents.size(); i++) {
+
+            SubscriptionStudents sub = subsStudents.get(i);
+            if (sub.getStudent().getId().equals(idStudent)) {
+                mSubStudentRepository.delete(sub.getId());
+            }
+        }
+    }
+    private void deleteSubTask(String idStudent, List<SubscriptionTasks> subsTasks) {
+
+        for (int i = 0; i < subsTasks.size(); i++) {
+
+            SubscriptionTasks sub = subsTasks.get(i);
+            if (sub.getStudent().getId().equals(idStudent)) {
+                mSubTaskRepository.delete(sub.getId());
+            }
+        }
     }
 }

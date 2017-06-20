@@ -54,13 +54,13 @@ public class SubscriptionTaskService {
         this.mSubTaskRepository.delete(idSubscriptionTask);
     }
 
-    public void updateSubscriptionTask(String idSubscriptionTask, SubscriptionTaskController.RequestSubscriptionTaskDTO updateSubscriptionTaskDTO) {
-        List<Object> listReference = this.getReferencesDB(updateSubscriptionTaskDTO);
+    public void updateSubscriptionTask(String idSubscriptionTask, SubscriptionTaskController.RequestSubscriptionTaskDTO updateSubTaskDTO) {
+        List<Object> listReference = this.getReferencesDB(updateSubTaskDTO);
         SubscriptionTasks subscriptiontask = (SubscriptionTasks)this.mSubTaskRepository.findOne(idSubscriptionTask);
         subscriptiontask.setStudent((Student)listReference.get(0));
         subscriptiontask.setCourse((Course)listReference.get(1));
         subscriptiontask.setTask((Task)listReference.get(2));
-        updateSubscriptionTaskDTO.setSubscriptionTaskDate(subscriptiontask.getSubscriptionTaskDate());
+        updateSubTaskDTO.setSubscriptionTaskDate(subscriptiontask.getSubscriptionTaskDate());
         this.mSubTaskRepository.save(subscriptiontask);
     }
 

@@ -40,13 +40,13 @@ public class SubscriptionStudentService {
         return (SubscriptionStudents)this.mSubscriptionStudentRepository.findOne(idSubscription);
     }
 
-    public void addSubscriptionStudent(SubscriptionStudentController.RequestSubscriptionStudentDTO subscriptionStudentDTO) {
+    public void addSubscriptionStudent(SubscriptionStudentController.RequestSubscriptionStudentDTO subStudentDTO) {
         SubscriptionStudents subscriptionStudent = new SubscriptionStudents();
-        List<Object> listReferences = this.getReferencesDB(subscriptionStudentDTO);
+        List<Object> listReferences = this.getReferencesDB(subStudentDTO);
         subscriptionStudent.setStudent((Student)listReferences.get(0));
         subscriptionStudent.setCourse((Course)listReferences.get(1));
         subscriptionStudent.setClassRoom((ClassRoom)listReferences.get(2));
-        subscriptionStudent.setSubscriptionStudentDate(subscriptionStudentDTO.getSubscriptionStudentDate());
+        subscriptionStudent.setSubscriptionStudentDate(subStudentDTO.getSubscriptionStudentDate());
         this.mSubscriptionStudentRepository.save(subscriptionStudent);
     }
 
@@ -54,13 +54,13 @@ public class SubscriptionStudentService {
         this.mSubscriptionStudentRepository.delete(idSubscriptionStudent);
     }
 
-    public void updateSubscriptionStudent(String idSubscriptionStudent, SubscriptionStudentController.RequestSubscriptionStudentDTO updateSubscriptionDTO) {
-        List<Object> listReference = this.getReferencesDB(updateSubscriptionDTO);
-        SubscriptionStudents subscriptionStudent = (SubscriptionStudents)this.mSubscriptionStudentRepository.findOne(idSubscriptionStudent);
+    public void updateSubscriptionStudent(String idSubStudent, SubscriptionStudentController.RequestSubscriptionStudentDTO updateSubDTO) {
+        List<Object> listReference = this.getReferencesDB(updateSubDTO);
+        SubscriptionStudents subscriptionStudent = (SubscriptionStudents)this.mSubscriptionStudentRepository.findOne(idSubStudent);
         subscriptionStudent.setStudent((Student)listReference.get(0));
         subscriptionStudent.setCourse((Course)listReference.get(1));
         subscriptionStudent.setClassRoom((ClassRoom)listReference.get(2));
-        subscriptionStudent.setSubscriptionStudentDate(updateSubscriptionDTO.getSubscriptionStudentDate());
+        subscriptionStudent.setSubscriptionStudentDate(updateSubDTO.getSubscriptionStudentDate());
         this.mSubscriptionStudentRepository.save(subscriptionStudent);
     }
 

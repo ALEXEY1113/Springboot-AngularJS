@@ -1,5 +1,6 @@
 package com.dh.finalproject.service;
 
+import com.dh.finalproject.domain.SubscriptionTasks;
 import com.dh.finalproject.domain.Task;
 import com.dh.finalproject.repository.SubscriptionTaskRepository;
 import com.dh.finalproject.repository.TaskRepository;
@@ -43,7 +44,8 @@ public class TaskService {
                 response = "Can't Delete this task.";
             } else {
                 this.mTaskRepository.delete(idTask);
-                this.mSubTaskRepository.deleteManyByIdTask(idTask);
+                List<SubscriptionTasks> subscriptionTasks = mSubTaskRepository.findAll();
+                deleteSubsTasks(idTask, subscriptionTasks);
                 response = "Task Deleted.";
             }
         } else {
@@ -70,5 +72,15 @@ public class TaskService {
         task.setState(taskDTO.getState());
         task.setDescription(taskDTO.getDescription());
         return task;
+    }
+
+    private void deleteSubsTasks(String idTask, List<SubscriptionTasks> subsTask) {
+        for (int i = 0; i < subsTask.size(); i++) {
+
+            SubscriptionTasks sub = subsTask.get(i);
+            if (sub.getTask().getId().equals(idTask)) {
+                mSubTaskRepository.delete(sub.getId());
+            }
+        }
     }
 }

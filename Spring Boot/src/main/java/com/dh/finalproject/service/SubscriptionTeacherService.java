@@ -63,6 +63,7 @@ public class SubscriptionTeacherService {
         }
 
         List<Object> listReferences = this.getReferencesDB(reqSubsTeacherDTO);
+        subscriptionTeachers.setSubscriptionTeacherDate(reqSubsTeacherDTO.getSubscriptionTeacherDate());
         subscriptionTeachers.setTeacher((Teacher)listReferences.get(0));
         subscriptionTeachers.setCourse((Course)listReferences.get(1));
         subscriptionTeachers.setClassRoom((ClassRoom)listReferences.get(2));

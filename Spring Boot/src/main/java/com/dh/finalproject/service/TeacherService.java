@@ -42,15 +42,29 @@ public class TeacherService {
 
     public boolean deleteTeacherById(String idTeacher) {
         boolean response = false;
-        SubscriptionTeachers subscriptionTeachers = this.mSubTeacherRepository.findByIdTeacher(idTeacher);
-        if(subscriptionTeachers == null) {
+        boolean teacherOk = false;
+        List<SubscriptionTeachers> subscriptionTeachers = this.mSubTeacherRepository.findAll();
+        List<SubscriptionStudents> subscriptionStudents = this.mSubStudentRepository.findAll();
+
+        if(subscriptionTeachers.size() == 0) {
             this.mTeacherRepository.delete(idTeacher);
             response = true;
         } else {
-            String idCourse = subscriptionTeachers.getCourse().getId();
-            SubscriptionStudents subscriptionStudents = this.mSubStudentRepository.findByIdCourse(idCourse);
-            if(subscriptionStudents == null) {
-                this.mTeacherRepository.delete(idTeacher);
+
+            for (int i = 0; i < subscriptionTeachers.size() && !teacherOk; i++) {
+
+                SubscriptionTeachers sub = subscriptionTeachers.get(i);
+                if (sub.getTeacher().getId().equals(idTeacher)) {
+
+                    String idCourse = sub.getCourse().getId();
+                    teacherOk = findSubStudentCourseId(idCourse, subscriptionStudents);
+
+                }
+            }
+
+            if (!teacherOk) {
+                mTeacherRepository.delete(idTeacher);
+                cleanTeacherEmpty(subscriptionTeachers);
                 response = true;
             }
         }
@@ -80,5 +94,31 @@ public class TeacherService {
         teacher.setPhone(teacherDTO.getPhone());
         teacher.setSalary(teacherDTO.getSalary());
         return teacher;
+    }
+
+    // Function for Find CourseID SubscriptionStudents
+    private boolean findSubStudentCourseId(String courseId, List<SubscriptionStudents> listItems) {
+        boolean founded = false;
+
+        for (int i = 0; i < listItems.size(); i++) {
+            SubscriptionStudents subStudent = listItems.get(i);
+            if (subStudent.getCourse().getId().equals(courseId)) {
+                founded = true;
+                break;
+            }
+        }
+
+        return founded;
+    }
+
+    private void cleanTeacherEmpty(List<SubscriptionTeachers> subsTeachers) {
+
+        for (int i = 0; i < subsTeachers.size(); i++) {
+            SubscriptionTeachers sub = subsTeachers.get(i);
+
+            if(sub.getTeacher() == null) {
+                mSubTeacherRepository.delete(sub.getId());
+            }
+        }
     }
 }

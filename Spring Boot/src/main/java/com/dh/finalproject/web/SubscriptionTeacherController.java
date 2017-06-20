@@ -43,8 +43,8 @@ public class SubscriptionTeacherController {
     @RequestMapping(
             method = {RequestMethod.POST}
     )
-    public void addSubscriptionTeacher(@RequestBody SubscriptionTeacherController.RequestSubscriptionTeacherDTO subscriptionTeacherDTO) {
-        this.mSubscriptionTeacherService.addSubscriptionTeacher(subscriptionTeacherDTO);
+    public void addSubscriptionTeacher(@RequestBody SubscriptionTeacherController.RequestSubscriptionTeacherDTO subTeacherDTO) {
+        this.mSubscriptionTeacherService.addSubscriptionTeacher(subTeacherDTO);
     }
 
     @RequestMapping(
@@ -59,8 +59,8 @@ public class SubscriptionTeacherController {
             method = {RequestMethod.PUT},
             value = {"/{id}"}
     )
-    public void setSubscriptionTeacher(@RequestBody SubscriptionTeacherController.RequestSubscriptionTeacherDTO setSubscriptionTeacher, @PathVariable String id) {
-        this.mSubscriptionTeacherService.updateSubscriptionTeacher(id, setSubscriptionTeacher);
+    public void setSubscriptionTeacher(@RequestBody SubscriptionTeacherController.RequestSubscriptionTeacherDTO setSubTeacher, @PathVariable String id) {
+        this.mSubscriptionTeacherService.updateSubscriptionTeacher(id, setSubTeacher);
     }
 
     public static class RequestSubscriptionTeacherDTO {
