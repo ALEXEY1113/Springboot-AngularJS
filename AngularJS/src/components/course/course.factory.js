@@ -7,11 +7,22 @@
 
   CoursesAllFactory.$inject = ['$http'];
   function CoursesAllFactory($http) {
+
+      // Variables
+      var courseDeletedSuccess = null;
+
     var service = {
       // Methods
       getAllCourses : getAllCourses,
+
       addNewCourse : addNewCourse,
-      deleteCourse : deleteCourse
+      
+      editCourse : editCourse,
+
+      deleteCourse : deleteCourse,
+      getVarDeletedCourseSuccess : getVarDeletedCourseSuccess
+
+
     };
     
     return service;
@@ -25,14 +36,23 @@
       return $http.post('http://localhost:8080/courses', newCourse);
     }
 
+    function editCourse(idCourse, course) {
+      return $http.put('http://localhost:8080/courses/' + idCourse, course);
+    }
+
     function deleteCourse(idCourse) {
       return $http.delete('http://localhost:8080/courses/' + idCourse)
                     .then(function (res) {
-                      console.log('RESPONSE: ', res);
+                      console.log('FactoryResponse', res);
+                      courseDeletedSuccess = res.data;
                     },
                     function(error) {
-                      console.log('RESPONSE ERR: ', error);
+                      console.log('FactoryError: ', error);
                     });
+    }
+
+    function getVarDeletedCourseSuccess() {
+      return courseDeletedSuccess;
     }
   }
 })();

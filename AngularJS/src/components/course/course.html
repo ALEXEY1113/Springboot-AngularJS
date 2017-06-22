@@ -49,12 +49,8 @@
     <div class="col-sm-9 col-md-9">
       <h2><small>{{$ctrl.actionCourseTitle}}</small></h2>
       <hr>
-      <!--<h2>I Love Food</h2>
-      <h5><span class="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
-      <h5><span class="label label-danger">Food</span> <span class="label label-primary">Ipsum</span></h5><br>
-      <p>Food is my passion. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>-->
 
-      <div id="addCourse" class="col-sm-offset-1 col-md-offset-1 col-sm-6 col-md-6" ng-if="$ctrl.contentActive === 'Add'">
+      <div id="addCourse" class="col-sm-offset-1 col-md-offset-1 col-sm-8 col-md-8" ng-if="$ctrl.contentActive === 'Add'">
         <form name="addNewCourse">
           <div class="form-group">
               <label for="nameCourse">Name:</label>
@@ -72,7 +68,7 @@
               <label for="descriptionCourse">Description:</label>
               <input type="text" class="form-control" id="descriptionCourse" placeholder="Description for Course" ng-model="$ctrl.course.description" required>
           </div>
-          <button type="button" class="btn btn-success" ng-click="$ctrl.createNewCourse($ctrl.course)" ng-disabled="addNewCourse.$invalid">Create Course</button>
+          <button type="button" class="btn btn-success" ng-click="$ctrl.createNewCourse($ctrl.course)" ng-disabled="addNewCourse.$invalid">Save Course</button>
           <button type="button" class="btn btn-default" ng-click="$ctrl.cancelAddCourse()">Cancel</button>
         </form>
         <div ng-class="'alert alert-' + $ctrl.alertDivContent.type">
@@ -80,34 +76,38 @@
         </div>
       </div>
 
-      <div id="editCourse" class="col-sm-offset-1 col-md-offset-1 col-sm-6 col-md-6" ng-if="$ctrl.contentActive === 'Edit'">
-        <form name="editCourse">
-          <div class="form-group">
-              <label for="nameCourse">Name:</label>
-              <input type="text" class="form-control" id="nameCourse" placeholder="Course Name" ng-model="$ctrl.course.name" required>
+      <div id="editCourse" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Edit'">
+        <div ng-if="$ctrl.alertDivContent.type === 'success'">
+          <div class="panel panel-title">
+            <div class="row">
+              <div class="col-sm-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
+              <div class="col-sm-2" style="background: green; font-weight: bold; text-align: center; color:white;">Code</div>
+              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
+              <div class="col-sm-2" style="background: green; font-weight: bold; text-align: center; color:white;">Grade</div>
+              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
+            </div>
           </div>
-          <div class="form-group">
-              <label for="codeCourse">Code:</label>
-              <input type="number" class="form-control" id="codeCourse" placeholder="Enter the code" ng-model="$ctrl.course.code" required>
+          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="course in $ctrl.listCourses" style="background: white; margin-top: 0px;">
+            <div class="col-sm-1 col-md-1 checkbox" style="margin-top: 0px;">
+              <input type="radio" name="course.id" ng-model="$ctrl.editSelectedCourse" value="{{course}}">
+            </div>
+            <div class="col-sm-2 col-md-2" style="text-align:center;"> {{course.code}} </div>
+            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{course.name}} </div>
+            <div class="col-sm-2 col-md-2" style="text-align:center;"> {{course.grade}} </div>
+            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{course.description}} </div>
           </div>
-          <div class="form-group">
-              <label for="gradeCourse">Grade:</label>
-              <input type="text" class="form-control" id="gradeCourse" placeholder="Grade of Course" ng-model="$ctrl.course.grade" required>
-          </div>
-          <div class="form-group">
-              <label for="descriptionCourse">Description:</label>
-              <input type="text" class="form-control" id="descriptionCourse" placeholder="Description for Course" ng-model="$ctrl.course.description" required>
-          </div>
-          <button type="button" class="btn btn-primary" ng-click="$ctrl.editCourse($ctrl.course)" ng-disabled="addNewCourse.$invalid">Edit Course</button>
-          <button type="button" class="btn btn-default" ng-click="$ctrl.cancelEditCourse()">Cancel</button>
-        </form>
-        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type">
+          <p>
+            <button type="button" class="btn btn-warning" ng-click="$ctrl.confirmEditCourse()">Edit Course</button>
+            <button type="button" class="btn" ng-click="$ctrl.cancelEditCourse()">Cancel</button>
+          </p>
+        </div>
+        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
           <span>{{$ctrl.alertDivContent.msg}}</span>
         </div>
       </div>
 
       <div id="deleteCourse" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Delete'">
-        <div>
+        <div ng-if="$ctrl.alertDivContent.type === 'success'">
           <div class="panel panel-title">
             <div class="row">
               <div class="col-sm-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
@@ -130,9 +130,9 @@
             <button type="button" class="btn btn-danger" ng-click="$ctrl.confirmDeleteCourse()">Delete Course</button>
             <button type="button" class="btn" ng-click="$ctrl.cancelDeleteCourse()">Cancel</button>
           </p>
-          <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'danger'">
-            <span>{{$ctrl.alertDivContent.msg}}</span>
-          </div>
+        </div>
+        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
+          <span>{{$ctrl.alertDivContent.msg}}</span>
         </div>
       </div>
       
