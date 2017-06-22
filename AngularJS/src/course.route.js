@@ -15,7 +15,7 @@
 
     .state('students', {
       url: '/students',
-      templateUrl: 'views/user.view.html'
+      templateUrl: 'views/student.view.html'
     })
 
     .state('teachers', {

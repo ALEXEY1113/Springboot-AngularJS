@@ -8,9 +8,9 @@
 
   angular
     .module('course')
-    .component('task', {
-      templateUrl: 'components/task/task.html',
-      controller: 'taskController',
+    .component('studentPanel', {
+      templateUrl: 'components/student-panel/student-panel.html',
+      controller: 'studentController',
       bindings: {
       }
     });

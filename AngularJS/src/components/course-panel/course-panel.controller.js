@@ -62,7 +62,7 @@
         courseAllFactory.editCourse(idCourse, vm.course)
                         .then(function (response) {
                           // Success
-                          console.log('Response After Edit', response);
+                          // console.log('Response After Edit', response);
                            vm.alertDivContent = navService.getDivAlert('success', 'Course was edited successfully.');
                          },
                          function (error) {

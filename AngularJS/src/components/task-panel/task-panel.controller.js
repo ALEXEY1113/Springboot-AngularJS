@@ -14,7 +14,7 @@
       
       vm.listTasks = null;
       
-      vm.btnEditPressed = false;
+      vm.btnEditTaskPressed = false;
       vm.activeMenuTask = navService.getDefaultOptCRUD();
       navService.setDefautlOptTitle();
       vm.actionTaskTitle = navService.getTitleOptionActive();
@@ -62,7 +62,7 @@
         taskFactory.editTask(idTask, vm.task)
                         .then(function (response) {
                           // Success
-                          console.log('Response After Edit', response);
+                          // console.log('Response After Edit', response);
                            vm.alertDivContent = navService.getDivAlert('success', 'Task was edited successfully.');
                          },
                          function (error) {
