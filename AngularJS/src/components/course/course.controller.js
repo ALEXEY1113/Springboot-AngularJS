@@ -12,11 +12,11 @@
     vm.$onInit = function() {
       initCourse(null);
       
-      vm.indexCourseSelected = null;
       vm.listCourses = null;
-      
-      vm.btnEditPressed = false;
+
+      vm.btnEditCoursePressed = false;
       vm.activeMenuCourse = navService.getDefaultOptCRUD();
+      navService.setDefautlOptTitle();
       vm.actionCourseTitle = navService.getTitleOptionActive();
       navService.setDefautlOptTitle();
       resetContentActive();
@@ -55,7 +55,7 @@
         idCourse = esc.id;
       }
 
-      if (vm.editSelectedCourse && vm.btnEditPressed) {
+      if (vm.editSelectedCourse && vm.btnEditCoursePressed) {
         // It's an Edition
         // console.log('Edit Course', vm.editSelectedCourse);
         
@@ -86,6 +86,7 @@
 
       initCourse(null);
       vm.editSelectedCourse = null;
+      vm.btnEditCoursePressed = false;
     }
     function cancelAddCourse() {
       navService.setDefautlOptTitle();
@@ -99,7 +100,7 @@
     function confirmEditCourse() {
       // console.log('EditSelectedCourse: ', vm.editSelectedCourse);
       if (vm.editSelectedCourse) {
-        vm.btnEditPressed = true;
+        vm.btnEditCoursePressed = true;
 
         var esc = JSON.parse(vm.editSelectedCourse);
         vm.course.name = esc.name;
@@ -193,14 +194,6 @@
       vm.contentActive = 'Delete';
 
       refreshListCourses();
-      // courseAllFactory.getAllCourses()
-      //                   .then(function (courses) {
-      //                     vm.listCourses = courses.data;
-      //                     vm.alertDivContent = navService.getDivAlert('success', 'All Courses.');
-      //                   },
-      //                   function(error) {
-      //                     vm.alertDivContent = navService.getDivAlert('danger', 'Failed to retrieve Courses.');
-      //                   });
     }
 
     function listOption() {
@@ -212,14 +205,6 @@
       vm.contentActive = 'List';
 
       refreshListCourses();
-      // courseAllFactory.getAllCourses()
-      //                   .then(function (courses) {
-      //                     vm.listCourses = courses.data;
-      //                     vm.alertDivContent = navService.getDivAlert('success', 'Courses Availables.');
-      //                   },
-      //                   function(error) {
-      //                     vm.alertDivContent = navService.getDivAlert('danger', 'Failed to retrieve Courses.');
-      //                   });
     }
 
     /*
@@ -236,25 +221,7 @@
         vm.course.description = c.description;
       } else {
         vm.course = {};
-        // vm.course.id = '';
-        // vm.course.name = '';
-        // vm.course.code = '';
-        // vm.course.grade = '';
-        // vm.course.description = '';
       }
-    }
-
-    function findIfIsEdit(course) {
-      var ext = false;
-      for (var i = 0; i < vm.listCourses.lenght; i++) {
-        var c = vm.listCourses[i];
-        if (c.id == course.id) {
-          ext = true;
-          break;
-        }
-      }
-
-      return ext;
     }
 
     function setOptionSelected(opt) {

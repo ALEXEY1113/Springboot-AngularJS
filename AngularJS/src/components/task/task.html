@@ -1,0 +1,155 @@
+<!--STYLES-->
+<style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    /*.row.content {height: 500px}*/
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      position: absolute;
+      background-color: #333;
+      color: white;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 15px;
+      text-align: center;
+      font-size: 16px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
+
+<!--HTML-->
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 col-md-3 sidenav">
+      <h4>Options</h4>
+      <ul class="nav nav-pills nav-stacked">
+        <li ng-class="{active : $ctrl.activeMenuTask === 'Add'}"><a href ng-click="$ctrl.addOption()">Add Task</a></li>
+        <li ng-class="{active : $ctrl.activeMenuTask === 'Edit'}"><a href ng-click="$ctrl.editOption()">Edit Task</a></li>
+        <li ng-class="{active : $ctrl.activeMenuTask === 'Delete'}"><a href ng-click="$ctrl.deleteOption()">Delete Task</a></li>
+        <li ng-class="{active : $ctrl.activeMenuTask === 'List'}"><a href ng-click="$ctrl.listOption()">List Task</a></li>
+      </ul>
+      <br>
+    </div>
+
+    <div class="col-sm-9 col-md-9">
+      <h2><small>{{$ctrl.actionTaskTitle}}</small></h2>
+      <hr>
+
+      <div id="addTask" class="col-sm-offset-1 col-md-offset-1 col-sm-8 col-md-8" ng-if="$ctrl.contentActive === 'Add'">
+        <form name="addNewTask">
+          <div class="form-group">
+              <label for="nameTask">Name:</label>
+              <input type="text" class="form-control" id="nameTask" placeholder="Task Name" ng-model="$ctrl.task.name" required>
+          </div>
+          <div class="form-group">
+              <label for="stateTask">State:</label>
+              <input type="text" class="form-control" id="stateTask" placeholder="State of Task" ng-model="$ctrl.task.state" required>
+          </div>
+          <div class="form-group">
+              <label for="descriptionTask">Description:</label>
+              <input type="text" class="form-control" id="descriptionTask" placeholder="Description for Task" ng-model="$ctrl.task.description">
+          </div>
+          <button type="button" class="btn btn-success" ng-click="$ctrl.createNewTask($ctrl.task)" ng-disabled="addNewTask.$invalid">Save Task</button>
+          <button type="button" class="btn btn-default" ng-click="$ctrl.cancelAddTask()">Cancel</button>
+        </form>
+        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type">
+          <span>{{$ctrl.alertDivContent.msg}}</span>
+        </div>
+      </div>
+
+      <div id="editTask" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Edit'">
+        <div ng-if="$ctrl.alertDivContent.type === 'success'">
+          <div class="panel panel-title">
+            <div class="row">
+              <div class="col-sm-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
+              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
+              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">State</div>
+              <div class="col-sm-5" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="task in $ctrl.listTasks" style="background: white; margin-top: 0px;">
+            <div class="col-sm-1 col-md-1 checkbox" style="margin-top: 0px;">
+              <input type="radio" name="task.id" ng-model="$ctrl.editSelectedTask" value="{{task}}">
+            </div>
+            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{task.name}} </div>
+            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{task.state}} </div>
+            <div class="col-sm-5 col-md-5" style="text-align:center;"> {{task.description}} </div>
+          </div>
+          <p>
+            <button type="button" class="btn btn-warning" ng-click="$ctrl.confirmEditTask()">Edit Task</button>
+            <button type="button" class="btn" ng-click="$ctrl.cancelEditTask()">Cancel</button>
+          </p>
+        </div>
+        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
+          <span>{{$ctrl.alertDivContent.msg}}</span>
+        </div>
+      </div>
+
+      <div id="deleteTask" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Delete'">
+        <div ng-if="$ctrl.alertDivContent.type === 'success'">
+          <div class="panel panel-title">
+            <div class="row">
+              <div class="col-sm-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
+              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
+              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">State</div>
+              <div class="col-sm-5" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="task in $ctrl.listTasks" style="background: white; margin-top: 0px;">
+            <div class="col-sm-1 col-md-1 checkbox" style="margin-top: 0px;">
+              <input type="radio" name="task.id" ng-model="$ctrl.deleteSelectedTask" value="{{task}}">
+            </div>
+            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{task.name}} </div>
+            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{task.state}} </div>
+            <div class="col-sm-5 col-md-5" style="text-align:center;"> {{task.description}} </div>
+          </div>
+          <p>
+            <button type="button" class="btn btn-danger" ng-click="$ctrl.confirmDeleteTask()">Delete Task</button>
+            <button type="button" class="btn" ng-click="$ctrl.cancelDeleteTask()">Cancel</button>
+          </p>
+        </div>
+        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
+          <span>{{$ctrl.alertDivContent.msg}}</span>
+        </div>
+      </div>
+      
+      <div id="listTask" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'List'">
+        <div ng-if="$ctrl.alertDivContent.type === 'success'">
+          <div class="panel panel-title">
+            <div class="row">
+              <div class="col-sm-4" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
+              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">State</div>
+              <div class="col-sm-5" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="task in $ctrl.listTasks" style="background: white; margin-top: 0px;">
+            <div class="col-sm-4 col-md-4" style="text-align:center;"> {{task.name}} </div>
+            <div class="col-sm-4 col-md-3" style="text-align:center;"> {{task.state}} </div>
+            <div class="col-sm-4 col-md-5" style="text-align:center;"> {{task.description}} </div>
+          </div>
+        </div>
+
+        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'danger'">
+          <span>{{$ctrl.alertDivContent.msg}}</span>
+        </div>
+      </div>
+
+      <br><br><br><br>
+    </div>
+  </div>
+</div>
