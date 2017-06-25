@@ -132,6 +132,24 @@
     position: relative; }
     .card .alert.alert-with-icon {
       padding-left: 65px; }
+  /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      position: absolute;
+      background-color: #333;
+      color: white;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 15px;
+      text-align: center;
+      font-size: 16px;
+    }
 </style>
 <div class="main-panel">
 
@@ -142,10 +160,10 @@
         <div class="col-sm-3 col-md-3 sidenav">
           <h4>Options</h4>
           <ul class="nav nav-pills nav-stacked">
-            <li ng-class="{active : $ctrl.activeMenuAdmin === 'SubStudent'}"><a href ng-click="$ctrl.addOption()">Subs Student</a></li>
-            <li ng-class="{active : $ctrl.activeMenuAdmin === 'SubTeacher'}"><a href ng-click="$ctrl.editOption()">Subs Teacher</a></li>
-            <li ng-class="{active : $ctrl.activeMenuAdmin === 'SubTask'}"><a href ng-click="$ctrl.deleteOption()">Subs Task</a></li>
-            <li ng-class="{active : $ctrl.activeMenuAdmin === 'OtherView'}"><a href ng-click="$ctrl.listOption()">Overview</a></li>
+            <li ng-class="{active : $ctrl.activeNavAdmin === 'Overview'}"><a href ng-click="$ctrl.navOverview()">Overview All</a></li>
+            <li ng-class="{active : $ctrl.activeNavAdmin === 'SubStudent'}"><a href ng-click="$ctrl.navSubStudent()">Subs Student</a></li>
+            <li ng-class="{active : $ctrl.activeNavAdmin === 'SubTeacher'}"><a href ng-click="$ctrl.navSubTeacher()">Subs Teacher</a></li>
+            <li ng-class="{active : $ctrl.activeNavAdmin === 'SubTask'}"><a href ng-click="$ctrl.navSubTask()">Subs Task</a></li>
           </ul>
           <br>
         </div>

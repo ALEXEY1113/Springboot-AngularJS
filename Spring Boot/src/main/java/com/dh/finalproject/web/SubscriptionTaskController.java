@@ -36,8 +36,8 @@ public class SubscriptionTaskController {
             method = {RequestMethod.GET},
             value = {"/{id}"}
     )
-    public SubscriptionTasks getSubscriptionTaskById(@PathVariable String id) {
-        return this.mSubscriptionTaskService.getSubscriptionTaskById(id);
+    public List<SubscriptionTasks> getSubscriptionTaskByTaskId(@PathVariable String id) {
+        return this.mSubscriptionTaskService.getSubscriptionTaskByTaskId(id);
     }
 
     @RequestMapping(

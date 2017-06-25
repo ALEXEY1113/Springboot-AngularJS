@@ -3,6 +3,7 @@ package com.dh.finalproject.web;
 import com.dh.finalproject.domain.SubscriptionStudents;
 import com.dh.finalproject.service.SubscriptionStudentService;
 import io.swagger.annotations.Api;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,12 +33,9 @@ public class SubscriptionStudentController {
         return this.mSubscriptionService.getAll();
     }
 
-    @RequestMapping(
-            method = {RequestMethod.GET},
-            value = {"/{id}"}
-    )
-    public SubscriptionStudents getSubscriptionStudentById(@PathVariable String id) {
-        return this.mSubscriptionService.getSubscriptionStudentById(id);
+    @RequestMapping(method = {RequestMethod.GET}, value = {"/{studentId}"})
+    public List<SubscriptionStudents> getSubscriptionStudentByStudentId(@PathVariable String studentId) {
+        return this.mSubscriptionService.getSubscriptionStudentByStudentId(studentId);
     }
 
     @RequestMapping(

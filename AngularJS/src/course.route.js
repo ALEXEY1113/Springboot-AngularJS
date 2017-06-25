@@ -18,9 +18,19 @@
       templateUrl: 'views/student.view.html'
     })
 
+    .state('sub-student', {
+      url: '/sub-student',
+      templateUrl: 'views/sub-student.view.html'
+    })
+
     .state('teachers', {
       url: '/teachers',
       templateUrl: 'views/teacher.view.html'
+    })
+
+    .state('sub-teacher', {
+      url: '/sub-teacher',
+      templateUrl: 'views/sub-teacher.view.html'
     })
     
     .state('courses', {
@@ -31,6 +41,11 @@
     .state('tasks', {
       url: '/tasks',
       templateUrl: 'views/task.view.html'
+    })
+
+    .state('sub-task', {
+      url: '/sub-task',
+      templateUrl: 'views/sub-task.html'
     })
     
     .state('admin-control', {

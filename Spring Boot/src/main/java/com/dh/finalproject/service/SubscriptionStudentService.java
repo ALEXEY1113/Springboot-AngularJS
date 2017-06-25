@@ -36,8 +36,18 @@ public class SubscriptionStudentService {
         return this.mSubscriptionStudentRepository.findAll();
     }
 
-    public SubscriptionStudents getSubscriptionStudentById(String idSubscription) {
-        return (SubscriptionStudents)this.mSubscriptionStudentRepository.findOne(idSubscription);
+    public List<SubscriptionStudents> getSubscriptionStudentByStudentId(String studentId) {
+        List<SubscriptionStudents> listSubscriptions = mSubscriptionStudentRepository.findAll();
+
+        List<SubscriptionStudents> listAuxSubStudent = new ArrayList<>();
+        for (int i = 0; i < listSubscriptions.size(); i++) {
+            SubscriptionStudents subStudent = listSubscriptions.get(i);
+
+            if (subStudent.getStudent().getId().equals(studentId)) {
+                listAuxSubStudent.add(subStudent);
+            }
+        }
+        return listAuxSubStudent;
     }
 
     public void addSubscriptionStudent(SubscriptionStudentController.RequestSubscriptionStudentDTO subStudentDTO) {

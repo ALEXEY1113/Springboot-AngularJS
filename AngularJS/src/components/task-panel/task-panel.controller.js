@@ -49,6 +49,8 @@
     function createNewTask(task) {
       vm.task = task;
       
+      console.log('Task is: ', vm.task);
+
       var idTask = null;
       if (vm.editSelectedTask) {
         var est = JSON.parse(vm.editSelectedTask);

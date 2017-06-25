@@ -14,6 +14,10 @@
     this.getDefaultOptCRUD = getDefaultOptCRUD;
     this.setActiveOptCRUD = setActiveOptCRUD;
     this.getActiveOptCRUD = getActiveOptCRUD;
+    // Options Navbar Admin
+    this.getAdminActiveNav = getAdminActiveNav;
+    this.setAdminActiveDefaultNav = setAdminActiveDefaultNav;
+    this.setAdminActiveNav = setAdminActiveNav;
     // Titles for Options
     this.setDefautlOptTitle = setDefautlOptTitle;
     this.getTitleOptionActive = getTitleOptionActive;
@@ -30,6 +34,9 @@
     var optionsCRUD = ['', 'Add', 'Edit', 'Delete', 'List'];
     var optionsActive = optionsCRUD[0];
     var titleOptionActive = 'Choose an Option in the panel left-hand side';
+    // Variables for Admin
+    var optionsAdminNav = ['Overview', 'SubStudent', 'SubTeacher', 'SubTask'];
+    var optAdminActive = optionsAdminNav[0];
     // Varialbes Div Alert
     var alertClassDiv = 'success';
     var alertMessageDiv = 'Some message';
@@ -44,6 +51,11 @@
         }
       }
     }
+
+    // Functions for Admin Operations
+    function getAdminActiveNav() { return optAdminActive; }
+    function setAdminActiveDefaultNav() { optAdminActive = optionsAdminNav[0]; }
+    function setAdminActiveNav(opt) { optAdminActive = opt; }
     
     // Functions for General CRUD Operations
     function getActiveOptCRUD() { return optionsActive; }

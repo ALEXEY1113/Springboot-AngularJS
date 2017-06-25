@@ -36,8 +36,18 @@ public class SubscriptionTaskService {
         return this.mSubTaskRepository.findAll();
     }
 
-    public SubscriptionTasks getSubscriptionTaskById(String idSubTask) {
-        return (SubscriptionTasks)this.mSubTaskRepository.findOne(idSubTask);
+    public List<SubscriptionTasks> getSubscriptionTaskByTaskId(String idTask) {
+        List<SubscriptionTasks> listSubscriptions = mSubTaskRepository.findAll();
+
+        List<SubscriptionTasks> listAuxSubTask = new ArrayList<>();
+        for (int i = 0; i < listSubscriptions.size(); i++) {
+            SubscriptionTasks subStudent = listSubscriptions.get(i);
+
+            if (subStudent.getTask().getId().equals(idTask)) {
+                listAuxSubTask.add(subStudent);
+            }
+        }
+        return listAuxSubTask;
     }
 
     public void addSubscriptionTask(SubscriptionTaskController.RequestSubscriptionTaskDTO subTaskDTO) {

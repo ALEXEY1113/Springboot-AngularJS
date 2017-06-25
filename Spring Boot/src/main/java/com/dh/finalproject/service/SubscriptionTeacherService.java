@@ -36,8 +36,19 @@ public class SubscriptionTeacherService {
         return this.mSubscriptionTeacherRepository.findAll();
     }
 
-    public SubscriptionTeachers getSubscriptionTeacherById(String idSubsTeacher) {
-        return (SubscriptionTeachers)this.mSubscriptionTeacherRepository.findOne(idSubsTeacher);
+    public List<SubscriptionTeachers> getSubscriptionTeacherByTeacherId(String idTeacher) {
+        List<SubscriptionTeachers> listSubTeacher = mSubscriptionTeacherRepository.findAll();
+
+        List<SubscriptionTeachers> listAuxSubTeacher = new ArrayList<>();
+        for (int i = 0; i < listSubTeacher.size(); i++) {
+            SubscriptionTeachers subTeacher = listSubTeacher.get(i);
+
+            if (subTeacher.getTeacher().getId().equals(idTeacher)) {
+                listAuxSubTeacher.add(subTeacher);
+            }
+        }
+
+        return listAuxSubTeacher;
     }
 
     public void addSubscriptionTeacher(SubscriptionTeacherController.RequestSubscriptionTeacherDTO newSubsTeacherDTO) {

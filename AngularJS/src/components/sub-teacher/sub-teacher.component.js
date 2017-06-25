@@ -8,11 +8,10 @@
 
   angular
     .module('course')
-    .component('userTable', {
-      templateUrl: 'components/user-table/user-table.html',
-      controller: 'userTableController',
+    .component('subTeacher', {
+      templateUrl: 'components/sub-teacher/sub-teacher.html',
+      controller: 'subTeacherController',
       bindings: {
-        
       }
     });
 })();

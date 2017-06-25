@@ -36,8 +36,8 @@ public class SubscriptionTeacherController {
             method = {RequestMethod.GET},
             value = {"/{id}"}
     )
-    public SubscriptionTeachers getSubscriptionTeacherById(@PathVariable String id) {
-        return this.mSubscriptionTeacherService.getSubscriptionTeacherById(id);
+    public List<SubscriptionTeachers> getSubscriptionTeacherByTeacherId(@PathVariable String id) {
+        return this.mSubscriptionTeacherService.getSubscriptionTeacherByTeacherId(id);
     }
 
     @RequestMapping(

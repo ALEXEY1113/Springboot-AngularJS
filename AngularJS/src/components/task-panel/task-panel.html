@@ -57,8 +57,12 @@
               <input type="text" class="form-control" id="nameTask" placeholder="Task Name" ng-model="$ctrl.task.name" required>
           </div>
           <div class="form-group">
-              <label for="stateTask">State:</label>
-              <input type="text" class="form-control" id="stateTask" placeholder="State of Task" ng-model="$ctrl.task.state" required>
+            <label for="stateTask">State:</label>
+            <select name="stateTask" ng-model="$ctrl.task.state" required>
+              <option value="To-Do">To-Do</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Finished">Finished</option>
+            </select>
           </div>
           <div class="form-group">
               <label for="descriptionTask">Description:</label>
