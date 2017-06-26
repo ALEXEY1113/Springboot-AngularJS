@@ -48,13 +48,15 @@ public class StudentService {
 
         Student student = mStudentRepository.findOne(idStudent);
         if (student != null) {
-            mStudentRepository.delete(idStudent);
             List<SubscriptionStudents> subscriptionStudents = mSubStudentRepository.findAll();
             List<SubscriptionTasks> subscriptionTasks = mSubTaskRepository.findAll();
 
             // Delete from other tables
             deleteSubStudent(idStudent, subscriptionStudents);
             deleteSubTask(idStudent, subscriptionTasks);
+
+            // Delete Student from Table Student
+            mStudentRepository.delete(idStudent);
         }
     }
 

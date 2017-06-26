@@ -1,12 +1,12 @@
 <style>
     .navbar-brand {
         margin: 0;
-        padding-left: 2px;
+        padding-left: 10px;
         padding-top: 8px;
     }
     .navbar-brand img {
-        max-width: 30px;
-        max-height: 35px;
+        max-width: 50px;
+        max-height: 40px;
     }
 </style>
 
@@ -19,14 +19,14 @@
           <span class="icon-bar"></span>                        
       </button>
       <a class="navbar-brand" href>
-          <img src="../images/umss.png" alt="Logo">
+          <img src="../images/logo.jpg" alt="Logo">
       </a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
           <li ng-class="{active : $ctrl.activeMenu === 'Home'}"><a href ng-click="$ctrl.admin()">Home</a></li>
           <li ng-class="{active : $ctrl.activeMenu === 'Teachers'}"><a href ng-click="$ctrl.teachers()">Teachers</a></li>
-          <li ng-class="{active : $ctrl.activeMenu === 'Students'}"><a href ng-click="$ctrl.students()">Studens</a></li>
+          <li ng-class="{active : $ctrl.activeMenu === 'Students'}"><a href ng-click="$ctrl.students()">Students</a></li>
           <li ng-class="{active : $ctrl.activeMenu === 'Courses'}"><a href ng-click="$ctrl.courses()">Courses</a></li>
           <li ng-class="{active : $ctrl.activeMenu === 'Tasks'}"><a href ng-click="$ctrl.tasks()">Tasks</a></li>
       </ul>

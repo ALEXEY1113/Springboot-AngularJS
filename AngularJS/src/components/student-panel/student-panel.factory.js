@@ -9,7 +9,7 @@
   function StudentFactory($http) {
 
     // Variables
-    var studentDeletedSuccess = null;
+    var studentDeletedSuccess = false;
 
     var service = {
       // Methods
@@ -44,7 +44,7 @@
       return $http.delete('http://localhost:8080/students/' + idStudent)
                     .then(function (res) {
                       console.log('FactoryResponse', res);
-                      studentDeletedSuccess = res.data;
+                      studentDeletedSuccess = true;
                     },
                     function(error) {
                       console.log('FactoryError: ', error);

@@ -218,7 +218,10 @@
         vm.task.name = t.name;
         vm.task.state = t.state;
         vm.task.description = t.description;
+
+        vm.isEditTask = true;
       } else {
+        vm.isEditTask = false;
         vm.task = {};
       }
     }

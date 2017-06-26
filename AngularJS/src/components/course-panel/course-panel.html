@@ -53,20 +53,20 @@
       <div id="addCourse" class="col-sm-offset-1 col-md-offset-1 col-sm-8 col-md-8" ng-if="$ctrl.contentActive === 'Add'">
         <form name="addNewCourse">
           <div class="form-group">
-              <label for="nameCourse">Name:</label>
-              <input type="text" class="form-control" id="nameCourse" placeholder="Course Name" ng-model="$ctrl.course.name" required>
+              <label for="nameCourse">*Name:</label>
+              <input type="text" class="form-control" id="nameCourse" placeholder="Eg. Human Biology" ng-model="$ctrl.course.name" required>
           </div>
           <div class="form-group">
-              <label for="codeCourse">Code:</label>
-              <input type="number" class="form-control" id="codeCourse" placeholder="Enter the code" ng-model="$ctrl.course.code" required>
+              <label for="codeCourse">*Code:</label>
+              <input type="number" class="form-control" id="codeCourse" placeholder="Eg. 2364" ng-model="$ctrl.course.code" required>
           </div>
           <div class="form-group">
-              <label for="gradeCourse">Grade:</label>
-              <input type="text" class="form-control" id="gradeCourse" placeholder="Grade of Course" ng-model="$ctrl.course.grade" required>
+              <label for="gradeCourse">*Grade:</label>
+              <input type="text" class="form-control" id="gradeCourse" placeholder="Eg. A" ng-model="$ctrl.course.grade" required>
           </div>
           <div class="form-group">
               <label for="descriptionCourse">Description:</label>
-              <input type="text" class="form-control" id="descriptionCourse" placeholder="Description for Course" ng-model="$ctrl.course.description" required>
+              <input type="text" class="form-control" id="descriptionCourse" placeholder="Eg. Designed for students with an interest in biology." ng-model="$ctrl.course.description">
           </div>
           <button type="button" class="btn btn-success" ng-click="$ctrl.createNewCourse($ctrl.course)" ng-disabled="addNewCourse.$invalid">Save Course</button>
           <button type="button" class="btn btn-default" ng-click="$ctrl.cancelAddCourse()">Cancel</button>

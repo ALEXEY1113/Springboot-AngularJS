@@ -53,30 +53,30 @@
       <div id="addStudent" class="col-sm-offset-1 col-md-offset-1 col-sm-8 col-md-8" ng-if="$ctrl.contentActive === 'Add'">
         <form name="addNewStudent">
           <div class="form-group">
-              <label for="codeStudent">Code:</label>
-              <input type="text" class="form-control" id="codeStudent" placeholder="Code of Student" ng-model="$ctrl.student.code" required>
+              <label for="codeStudent">*Code:</label>
+              <input type="number" class="form-control" id="codeStudent" placeholder="Eg. 23366" ng-model="$ctrl.student.code" required>
           </div>
           <div class="form-group">
-              <label for="nameStudent">Name:</label>
-              <input type="text" class="form-control" id="nameStudent" placeholder="Student Name" ng-model="$ctrl.student.name" required>
+              <label for="nameStudent">*Name:</label>
+              <input type="text" class="form-control" id="nameStudent" placeholder="Eg. Jhon" ng-model="$ctrl.student.name" required>
           </div>
           <div class="form-group">
-              <label for="lastnameStudent">Lastname:</label>
-              <input type="text" class="form-control" id="lastnameStudent" placeholder="Student Lastname" ng-model="$ctrl.student.lastname" required>
+              <label for="lastnameStudent">*Lastname:</label>
+              <input type="text" class="form-control" id="lastnameStudent" placeholder="Eg. Wick" ng-model="$ctrl.student.lastname" required>
           </div>
           <div class="form-group">
-              <label for="emailStudent">Email:</label>
-              <input type="email" class="form-control" id="emailStudent" placeholder="Email of Student" ng-model="$ctrl.student.email" required>
+              <label for="emailStudent">*Email:</label>
+              <input type="email" class="form-control" id="emailStudent" placeholder="Eg. jhon.wick@latinmail.com" ng-model="$ctrl.student.email" required>
           </div>
           <div class="form-group">
               <label for="phoneStudent">Phone:</label>
-              <input type="number" class="form-control" id="phoneStudent" placeholder="Phone of Student" ng-model="$ctrl.student.phone" required>
+              <input type="number" class="form-control" id="phoneStudent" placeholder="Eg. 479856325" ng-model="$ctrl.student.phone">
           </div>
           <div class="form-group">
               <label for="addressStudent">Address:</label>
-              <input type="text" class="form-control" id="addressStudent" placeholder="Address for Student" ng-model="$ctrl.student.address" required>
+              <input type="text" class="form-control" id="addressStudent" placeholder="Eg. Some place #2256" ng-model="$ctrl.student.address">
           </div>
-          <button type="button" class="btn btn-success" ng-click="$ctrl.createNewStudent($ctrl.student)" ng-disabled="addNewStudent.$invalid">Save Teacher</button>
+          <button type="button" class="btn btn-success" ng-click="$ctrl.createNewStudent($ctrl.student)" ng-disabled="addNewStudent.$invalid">Save Student</button>
           <button type="button" class="btn btn-default" ng-click="$ctrl.cancelAddStudent()">Cancel</button>
         </form>
         <div ng-class="'alert alert-' + $ctrl.alertDivContent.type">
