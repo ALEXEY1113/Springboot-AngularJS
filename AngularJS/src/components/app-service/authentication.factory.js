@@ -8,7 +8,9 @@
   AuthenticationFactory.$inject = ['$http', '$q'];
   function AuthenticationFactory($http, $q) {
     var service = {
+
       getByUsername : getByUsername
+    
     };
     
     return service;
@@ -17,6 +19,7 @@
     function getByUsername(username) {
       return $http.get('http://localhost:8080/login/' + username)
                     .then(function(user) {
+
                       return user;
                     },
                     function(err) {

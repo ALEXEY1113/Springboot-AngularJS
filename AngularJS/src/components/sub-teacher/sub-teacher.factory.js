@@ -44,8 +44,8 @@
     }
 
     function saveSubsTeacherCourses(subscriptionTeacher) {
-      console.log('Data SubTeacher', subscriptionTeacher);
-      // return $http.post('http://localhost:8080/subs-teachers', subscriptionTeacher);
+      // console.log('Data SubTeacher', subscriptionTeacher);
+      return $http.post('http://localhost:8080/subs-teachers', subscriptionTeacher);
     }
   }
 })();

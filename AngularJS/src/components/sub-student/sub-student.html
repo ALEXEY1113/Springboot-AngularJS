@@ -9,6 +9,11 @@
       height: 100%;
     }
     
+    hr {
+      color: green;
+      border: 1px solid green;
+    }
+
     /* Set black background color, white text and some padding */
     footer {
       position: absolute;
@@ -75,12 +80,12 @@
         <uib-tabset active="active">
           <uib-tab index="0" heading="Show Subscriptions">
 
-            <div ng-if="$ctrl.listSubs.length > 0">
+            <div ng-if="$ctrl.listSubsDB.length > 0">
               <h2><small>All Students Subscription</small></h2>
               <hr>
 
               <div id="allSubscriptionStudent">
-                <div id="studentView" ng-repeat="st in $ctrl.listSubs">
+                <div id="studentView" ng-repeat="st in $ctrl.listSubsDB">
                   <h4 for="student"><strong>Student</strong></h4>
                   <strong>Code:  </strong>{{st.student.code}} | 
                   <strong>Name:  </strong>{{st.student.name}} {{st.student.lastname}} | 
@@ -100,7 +105,7 @@
               </div>
             </div>
 
-            <div ng-if="$ctrl.listSubs.length === 0">
+            <div ng-if="$ctrl.listSubsDB.length === 0">
               <small><h4>There is no Subscription Student still</h4></small>
             </div>
             
@@ -126,9 +131,6 @@
                   </div>
                   <button type="button" class="btn btn-success" ng-click="$ctrl.confirmSelection($ctrl.coursesSubStudent)" ng-disabled="addNewSubStudent.$invalid">Next</button>
                 </form>
-                <div ng-class="'alert alert-' + $ctrl.alertDivContent.type">
-                  <span>{{$ctrl.alertDivContent.msg}}</span>
-                </div>
               </div>
               <div id="viewSelection" class="col-sm-5 col-md-5">
                 <div id="studentView">
@@ -145,6 +147,11 @@
             
             <div id="confirmationSelection" ng-if="$ctrl.preSelection === 'Done'">
               <button type="button" class="btn btn-primary" ng-click="$ctrl.backSubStudent()">Back</button>
+              
+              <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.saveSubsStudentDone">
+                <span>{{$ctrl.alertDivContent.msg}}</span>
+              </div>
+              
               <h3>Student:</h3>
               <div class="table-responsive">
                 <table class="table">
@@ -193,8 +200,8 @@
                 </table>
               </div>
 
-              <button type="button" class="btn btn-success" ng-click="$ctrl.saveSubStudent()">Save Subscription</button>
-              <button type="button" class="btn btn-default" ng-click="$ctrl.cancelSubStudent()">Cancel</button>
+              <button type="button" class="btn btn-success" ng-click="$ctrl.saveSubStudent()" ng-disabled="$ctrl.saveSubsStudentDone">Save Subscription</button>
+              <button type="button" class="btn btn-default" ng-click="$ctrl.cancelSubStudent()" ng-disabled="$ctrl.saveSubsStudentDone">Cancel</button>
             </div>
           </uib-tab>
         </uib-tabset>

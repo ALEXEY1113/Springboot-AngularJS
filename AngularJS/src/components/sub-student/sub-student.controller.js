@@ -14,13 +14,12 @@
     vm.listCoursesDB = [];
     var listCoursesDBAux = [];
     vm.newSubStudent = null;
-    vm.coursesSubStudent = [];
 
     vm.student = null;
     vm.courses = [];
 
     vm.preSelection = 'Confirm';
-    vm.listSubs = [];
+    vm.listSubsDB = [];
 
     vm.confirmSelection = confirmSelection;
     vm.backSubStudent = backSubStudent;
@@ -41,11 +40,8 @@
                     vm.listClassRoomsDB = response.data;
                   });
 
-      subStudentFactory.getAllSubStudent()
-                .then(function(response) {
-                  vm.listSubs = response.data;
-                });
-
+      // Getting All Subscription Student
+      getAllSubStudent();
 
       vm.actionSubStudentTitle = 'Add New Subscription Student';
       // navService.setAdminActiveDefaultNav();
@@ -86,6 +82,13 @@
     function backSubStudent() {
       vm.courses = [];
       vm.preSelection = 'Confirm';
+      vm.saveSubsStudentDone = false;
+
+      // Teacher with Courses Availables
+      getStudent();
+
+      // General List of Subscriptions Teacher
+      getAllSubStudent();
     }
     function saveSubStudent() {
       // console.log('Saving Subscription Student');
@@ -100,8 +103,18 @@
                         'subscriptionStudentDate': new Date()
                       };
 
+        // Save Subscription Student
         subStudentFactory.saveSubsStudentCourses(subStudent);
       }
+
+      // Show Message Success
+      vm.alertDivContent = navService.getDivAlert('success', 'Subscription Student was created successfully.');
+
+      // Reset Fields after save Subscriptions Student
+      vm.saveSubsStudentDone = true;
+
+      // Refres List SubscriptionsDB
+      getAllSubStudent();
     }
     function cancelSubStudent() {
       console.log('Cancel Subscription Student');
@@ -111,10 +124,11 @@
     function initSelectionDefault() {
       vm.preSelection = 'Confirm';
 
-      vm.newSubStudent = null;
-      vm.coursesSubStudent = [];
+      vm.saveSubsStudentDone = false;
 
       vm.student = null;
+      vm.newSubStudent = null;
+
       vm.courses = [];
     }
 
@@ -136,6 +150,13 @@
       }
 
       vm.listCoursesDB = listCoursesDBAux;
+    }
+
+    function getAllSubStudent() {
+      subStudentFactory.getAllSubStudent()
+                        .then(function(response) {
+                          vm.listSubsDB = response.data;
+                        });
     }
 
     function getAllCoursesDefault() {

@@ -45,7 +45,7 @@
 
     .state('sub-task', {
       url: '/sub-task',
-      templateUrl: 'views/sub-task.html'
+      templateUrl: 'views/sub-task.view.html'
     })
     
     .state('admin-control', {

@@ -1,0 +1,253 @@
+<!--STYLES-->
+<style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    /*.row.content {height: 500px}*/
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    hr {
+      color: blue;
+      border: 1px solid blue;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      position: absolute;
+      background-color: #333;
+      color: white;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 15px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    div #viewSelection h3 {
+      font-weight: bold;
+      margin-top: 0px;
+    }
+
+    div #viewSelection div strong {
+      font-style: italic;
+    }
+
+    div #viewSelection #CoursesAssingment {
+      margin-top: 15px;
+    }
+
+    #addSubTask form div select {
+      width: 90%;
+      font-style: oblique;
+      padding-left: 15px;
+    }
+
+    .row {
+      padding-left: 1em;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
+
+<!--HTML-->
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 col-md-3 sidenav">
+          <h4>Options</h4>
+          <ul class="nav nav-pills nav-stacked">
+            <li ng-class="{active : $ctrl.activeNavAdmin === 'Overview'}"><a href ng-click="$ctrl.navOverview()">Overview All</a></li>
+            <li ng-class="{active : $ctrl.activeNavAdmin === 'SubStudent'}"><a href ng-click="$ctrl.navSubStudent()">Subs Student</a></li>
+            <li ng-class="{active : $ctrl.activeNavAdmin === 'SubTeacher'}"><a href ng-click="$ctrl.navSubTeacher()">Subs Teacher</a></li>
+            <li ng-class="{active : $ctrl.activeNavAdmin === 'SubTask'}"><a href ng-click="$ctrl.navSubTask()">Subs Task</a></li>
+          </ul>
+          <br>
+        </div>
+
+    <div class="col-sm-9 col-md-9">
+
+      <div class="row">
+        <uib-tabset active="active">
+          <uib-tab index="0" heading="Show Subscriptions">
+
+            <div ng-if="$ctrl.listSubsDB.length > 0">
+              <h2><small>All Tasks Subscription</small></h2>
+              <hr>
+
+              <div id="allSubscriptionTask">
+                <div id="taskView" ng-repeat="stask in $ctrl.listSubsDB">
+                  <h4 for="task"><strong>Task</strong></h4>
+                  <strong>Name:  </strong>{{stask.task.name}} | 
+                  <strong>State:  </strong>{{stask.task.state}} | 
+                  <strong>Description:  </strong>{{stask.task.description}} |
+
+                  <h4 for="task"><strong>Student</strong></h4>
+                  <div class="table-responsive">
+                    <strong>Code:  </strong>{{stask.student.code}} | 
+                    <strong>Name:  </strong>{{stask.student.name}} {{stask.student.lastname}}| 
+                    <strong>Email:  </strong>{{stask.student.email}} | 
+                    <strong>Phone:  </strong>{{stask.student.phone}} | 
+                    <strong>Address:  </strong>{{stask.student.address}}
+                  </div>
+
+                  <h4 for="task"><strong>Course</strong></h4>
+                  <div class="table-responsive">
+                    <strong>Code:  </strong>{{stask.course.code}} | 
+                    <strong>Name:  </strong>{{stask.course.name}} | 
+                    <strong>Grade:  </strong>{{stask.course.grade}} | 
+                    <strong>Description:  </strong>{{stask.course.description}}
+                  </div>
+                  <hr>
+                </div>
+              </div>
+            </div>
+
+            <div ng-if="$ctrl.listSubsDB.length === 0">
+              <small><h4>There is no Subscription Task still</h4></small>
+            </div>
+            
+          </uib-tab>
+          <uib-tab index="1" heading="Add New Subscription">
+            <h2><small>{{$ctrl.actionSubTaskTitle}}</small></h2>
+            <hr>
+
+            <div id="pre-selection" ng-if="$ctrl.preSelection === 'Confirm'">
+              <div id="addSubTask" class="col-sm-offset-1 col-md-offset-1 col-sm-5 col-md-5" >
+                <form name="addNewSubTask">
+                  <div class="form-group">
+                      <label for="studentSubTask">Task:</label>
+                      <select name="subTask" ng-model="$ctrl.newSubTask" ng-change="$ctrl.getTask()" required>
+                        <option value="{{task}}" ng-repeat="task in $ctrl.listTasksDB">{{task.name}} {{task.lastname}}</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label for="studentTask">Student:</label><br>
+                      <select name="studentTask" ng-model="$ctrl.studentsSubTask" ng-change="$ctrl.studentChange()" multiple required>
+                        <option value="{{student}}" ng-repeat="student in $ctrl.listStudentsDB">{{student.name}} - {{student.lastname}}</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label for="coursesTask">Course: <small>(Grade - Name)</small></label><br>
+                      <select name="coursesTask" ng-model="$ctrl.coursesSubTask" ng-change="$ctrl.courseChange()" multiple required>
+                        <option value="{{course}}" ng-repeat="course in $ctrl.listCoursesDB">{{course.grade}} - {{course.name}}</option>
+                      </select>
+                  </div>
+                  <button type="button" class="btn btn-success" ng-click="$ctrl.confirmSelection($ctrl.coursesSubTask, $ctrl.studentsSubTask)" ng-disabled="addNewSubTask.$invalid">Next</button>
+                </form>
+              </div>
+              <div id="viewSelection" class="col-sm-5 col-md-5">
+                <div id="taskView">
+                  <h3 for="task">Task</h3>
+                  <div><strong>Name: </strong>{{$ctrl.task.name}}</div>
+                  <div><strong>State: </strong>{{$ctrl.task.state}}</div>
+                  <div><strong>Description: </strong>{{$ctrl.task.description}}</div>
+                </div>
+                <div id="studentView">
+                  <h3 for="student">Students:</h3>
+                  <div>{{$ctrl.studentsArrayView}}</div>
+                </div>
+                <div id="courseView">
+                  <h3 for="course">Courses:</h3>
+                  <div>{{$ctrl.coursesArrayView}}</div>
+                </div>
+              </div>
+            </div>
+            
+            <div id="confirmationSelection" ng-if="$ctrl.preSelection === 'Done'">
+              <button type="button" class="btn btn-primary" ng-click="$ctrl.backSubTask()">Back</button>
+
+              <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.saveSubsTaskDone">
+                <span>{{$ctrl.alertDivContent.msg}}</span>
+              </div>
+
+              <div >
+                <h3>Task:</h3>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Grade</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{$ctrl.task.name}}</td>
+                        <td>{{$ctrl.task.grade}}</td>
+                        <td>{{$ctrl.task.description}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3>Students:</h3>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="s in $ctrl.students">
+                      <tr>
+                        <td>{{s.code}}</td>
+                        <td>{{s.name}}</td>
+                        <td>{{s.lastname}}</td>
+                        <td>{{s.email}}</td>
+                        <td>{{s.phone}}</td>
+                        <td>{{s.address}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3>Courses:</h3>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Grade</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="c in $ctrl.courses">
+                      <tr>
+                        <td>{{c.code}}</td>
+                        <td>{{c.name}}</td>
+                        <td>{{c.grade}}</td>
+                        <td>{{c.description}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-success" ng-click="$ctrl.saveSubTask()" ng-disabled="$ctrl.saveSubsTaskDone">Save Subscription</button>
+              <button type="button" class="btn btn-default" ng-click="$ctrl.cancelSubTask()" ng-disabled="$ctrl.saveSubsTaskDone">Cancel</button>
+            </div>
+          </uib-tab>
+        </uib-tabset>
+      </div>
+
+      <br><br>
+    </div>
+  </div>
+</div>

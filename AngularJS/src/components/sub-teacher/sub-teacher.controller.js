@@ -14,13 +14,12 @@
     vm.listCoursesDB = [];
     var listCoursesDBAux = [];
     vm.newSubTeacher = null;
-    vm.coursesSubTeacher = [];
 
     vm.teacher = null;
     vm.courses = [];
 
     vm.preSelection = 'Confirm';
-    vm.listSubs = [];
+    vm.listSubsDB = [];
 
     vm.confirmSelection = confirmSelection;
     vm.backSubTeacher = backSubTeacher;
@@ -40,12 +39,9 @@
                   .then(function (response) {
                     vm.listClassRoomsDB = response.data;
                   });
-
-      subTeacherFactory.getAllSubTeacher()
-                .then(function(response) {
-                  vm.listSubs = response.data;
-                });
-
+      
+      // Getting All Subscription Teacher
+      getAllSubTeacher();
 
       vm.actionSubTeacherTitle = 'Add New Subscription Teacher';
       // navService.setAdminActiveDefaultNav();
@@ -86,8 +82,13 @@
     function backSubTeacher() {
       vm.courses = [];
       vm.preSelection = 'Confirm';
+      vm.saveSubsTeacherDone = false;
 
+      // Teacher with Courses Availables
       getTeacher();
+
+      // General List of Subscriptions Teacher
+      getAllSubTeacher();
     }
     function saveSubTeacher() {
       // console.log('Saving Subscription Teacher');
@@ -107,12 +108,13 @@
       }
 
       // Show Message Success
-      vm.alertDivContent = navService.getDivAlert('success', 'Subscription Teacher Created Successfully.');
+      vm.alertDivContent = navService.getDivAlert('success', 'Subscription Teacher was created successfully.');
 
       // Reset Fields after save Subscriptions Teacher
-      vm.teacher = null;
-      vm.courses = [];
       vm.saveSubsTeacherDone = true;
+
+      // Refres List SubscriptionsDB
+      getAllSubTeacher();
     }
     function cancelSubTeacher() {
       console.log('Cancel Subscription Teacher');
@@ -122,10 +124,11 @@
     function initSelectionDefault() {
       vm.preSelection = 'Confirm';
 
-      vm.newSubTeacher = null;
-      vm.coursesSubTeacher = [];
+      vm.saveSubsTeacherDone = false;
 
       vm.teacher = null;
+      vm.newSubTeacher = null;
+
       vm.courses = [];
     }
 
@@ -154,6 +157,13 @@
                         .then(function(response) {
                           listCoursesDBAux = response.data;
                         });
+    }
+
+    function getAllSubTeacher () {
+      subTeacherFactory.getAllSubTeacher()
+                      .then(function(response) {
+                        vm.listSubsDB = response.data;
+                      });
     }
 
     function selectRandomIdClassRoom() {
