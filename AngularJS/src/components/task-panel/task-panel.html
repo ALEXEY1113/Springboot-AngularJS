@@ -21,6 +21,11 @@
       text-align: center;
       font-size: 16px;
     }
+
+    #accordionGroup {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -39,8 +44,6 @@
       <h4>Options</h4>
       <ul class="nav nav-pills nav-stacked">
         <li ng-class="{active : $ctrl.activeMenuTask === 'Add'}"><a href ng-click="$ctrl.addOption()">Add Task</a></li>
-        <li ng-class="{active : $ctrl.activeMenuTask === 'Edit'}"><a href ng-click="$ctrl.editOption()">Edit Task</a></li>
-        <li ng-class="{active : $ctrl.activeMenuTask === 'Delete'}"><a href ng-click="$ctrl.deleteOption()">Delete Task</a></li>
         <li ng-class="{active : $ctrl.activeMenuTask === 'List'}"><a href ng-click="$ctrl.listOption()">List Task</a></li>
       </ul>
       <br>
@@ -68,6 +71,9 @@
               <label for="descriptionTask">Description:</label>
               <input type="text" class="form-control" id="descriptionTask" placeholder="Eg. Find a Solution for Area 51." ng-model="$ctrl.task.description">
           </div>
+
+          <p class="alert alert-warning">Fields with simbol (*) are required</p>
+
           <button type="button" class="btn btn-success" ng-click="$ctrl.createNewTask($ctrl.task)" ng-disabled="addNewTask.$invalid">Save Task</button>
           <button type="button" class="btn btn-default" ng-click="$ctrl.cancelAddTask()">Cancel</button>
         </form>
@@ -76,81 +82,45 @@
         </div>
       </div>
 
-      <div id="editTask" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Edit'">
-        <div ng-if="$ctrl.alertDivContent.type === 'success'">
-          <div class="panel panel-title">
-            <div class="row">
-              <div class="col-sm-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">State</div>
-              <div class="col-sm-5" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
-            </div>
-          </div>
-          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="task in $ctrl.listTasks" style="background: white; margin-top: 0px;">
-            <div class="col-sm-1 col-md-1 checkbox" style="margin-top: 0px;">
-              <input type="radio" name="task.id" ng-model="$ctrl.editSelectedTask" value="{{task}}">
-            </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{task.name}} </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{task.state}} </div>
-            <div class="col-sm-5 col-md-5" style="text-align:center;"> {{task.description}} </div>
-          </div>
-          <p>
-            <button type="button" class="btn btn-warning" ng-click="$ctrl.confirmEditTask()">Edit Task</button>
-            <button type="button" class="btn" ng-click="$ctrl.cancelEditTask()">Cancel</button>
-          </p>
-        </div>
-        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
-          <span>{{$ctrl.alertDivContent.msg}}</span>
-        </div>
-      </div>
-
-      <div id="deleteTask" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Delete'">
-        <div ng-if="$ctrl.alertDivContent.type === 'success'">
-          <div class="panel panel-title">
-            <div class="row">
-              <div class="col-sm-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">State</div>
-              <div class="col-sm-5" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
-            </div>
-          </div>
-          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="task in $ctrl.listTasks" style="background: white; margin-top: 0px;">
-            <div class="col-sm-1 col-md-1 checkbox" style="margin-top: 0px;">
-              <input type="radio" name="task.id" ng-model="$ctrl.deleteSelectedTask" value="{{task}}">
-            </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{task.name}} </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{task.state}} </div>
-            <div class="col-sm-5 col-md-5" style="text-align:center;"> {{task.description}} </div>
-          </div>
-          <p>
-            <button type="button" class="btn btn-danger" ng-click="$ctrl.confirmDeleteTask()">Delete Task</button>
-            <button type="button" class="btn" ng-click="$ctrl.cancelDeleteTask()">Cancel</button>
-          </p>
-        </div>
-        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
-          <span>{{$ctrl.alertDivContent.msg}}</span>
-        </div>
-      </div>
-      
       <div id="listTask" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'List'">
+        
         <div ng-if="$ctrl.alertDivContent.type === 'success'">
+          
           <div class="panel panel-title">
             <div class="row">
-              <div class="col-sm-4" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">State</div>
-              <div class="col-sm-5" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
+              <div class="col-sm-7" style="background: green; font-weight: bold; text-align: center; color:white;">Tasks</div>
+              <div class="col-sm-5" style="background: green; font-weight: bold; text-align: center; color:white;">Actions</div>
             </div>
           </div>
-          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="task in $ctrl.listTasks" style="background: white; margin-top: 0px;">
-            <div class="col-sm-4 col-md-4" style="text-align:center;"> {{task.name}} </div>
-            <div class="col-sm-4 col-md-3" style="text-align:center;"> {{task.state}} </div>
-            <div class="col-sm-4 col-md-5" style="text-align:center;"> {{task.description}} </div>
-          </div>
+
+          <uib-accordion close-others="true">
+            <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="task in $ctrl.listTasks track by $index" style="background: white; margin-top: 0px;">
+              <div id="accordionGroup" uib-accordion-group class="panel col-sm-7 col-md-8" ng-class="(task.state === 'Finished') ? 'panel-success' : (task.state === 'In Progress') ? 'panel-warning' : 'panel-default'" is-open="$ctrl.accordionArrayTasks[$index]">
+
+                <uib-accordion-heading>
+                  <strong>Name: </strong>{{task.name}}
+                </uib-accordion-heading>
+                <div class="row col-sm-12 col-md-12">
+                  <div><strong>Name: </strong> {{task.name}} </div>
+                  <div><strong>State: </strong> {{task.state}} </div>
+                  <div><strong>Description: </strong> {{task.description}} </div>
+                </div>
+
+              </div>
+              <div class="col-sm-5 col-md-4" style="display: flex; justify-content: space-around;">
+                <button class="pull-right btn btn-primary" ng-click="$ctrl.accordionArrayTasks[$index] = !$ctrl.accordionArrayTasks[$index]">+ Info</button>
+                <button class="pull-right btn btn-warning" ng-click="$ctrl.confirmEditTask($index)">Edit</button>
+                <button class="pull-right btn btn-danger" ng-click="$ctrl.confirmDeleteTask($index)">Delete</button>
+              </div>
+            </div>
+          </uib-accordion>
+
         </div>
 
         <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'danger'">
           <span>{{$ctrl.alertDivContent.msg}}</span>
         </div>
+
       </div>
 
       <br><br><br><br>

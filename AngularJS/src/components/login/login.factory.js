@@ -31,7 +31,7 @@
       var response;
         authenticationFactory.getByUsername(username)
           .then(function (user) {
-            console.log('USER: ', user);
+            // console.log('USER: ', user);
             if (user.data !== '' && user.data.password === password) {
               isLoged = true;
               response = { success: true };

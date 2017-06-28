@@ -5,11 +5,13 @@
     .module('course')
     .controller('coursesAllController', CoursesAllController);
 
-  CoursesAllController.$inject = ['coursesAllFactory', 'navService'];
-  function CoursesAllController(courseAllFactory, navService) {
+  CoursesAllController.$inject = ['coursesAllFactory', 'navService', '$uibModal'];
+  function CoursesAllController(courseAllFactory, navService, $uibModal, $document) {
     var vm = this;
 
     vm.$onInit = function() {
+      vm.accordionArray = [];
+
       initCourse(null);
       
       vm.listCourses = null;
@@ -51,14 +53,15 @@
       
       var idCourse = null;
       if (vm.editSelectedCourse) {
-        var esc = JSON.parse(vm.editSelectedCourse);
+        // var esc = JSON.parse(vm.editSelectedCourse);
+        var esc = vm.editSelectedCourse;
         idCourse = esc.id;
       }
 
       if (vm.editSelectedCourse && vm.btnEditCoursePressed) {
         // It's an Edition
         // console.log('Edit Course', vm.editSelectedCourse);
-        
+
         courseAllFactory.editCourse(idCourse, vm.course)
                         .then(function (response) {
                           // Success
@@ -87,6 +90,7 @@
       initCourse(null);
       vm.editSelectedCourse = null;
       vm.btnEditCoursePressed = false;
+      vm.accordionArray = [];
     }
     function cancelAddCourse() {
       navService.setDefautlOptTitle();
@@ -95,14 +99,19 @@
       
       initCourse(null);
       vm.editSelectedCourse = null;
+
+      vm.accordionArray = [];
     }
 
-    function confirmEditCourse() {
+    function confirmEditCourse(index) {
       // console.log('EditSelectedCourse: ', vm.editSelectedCourse);
+      vm.editSelectedCourse = vm.listCourses[index];
+
       if (vm.editSelectedCourse) {
         vm.btnEditCoursePressed = true;
 
-        var esc = JSON.parse(vm.editSelectedCourse);
+        // var esc = JSON.parse(vm.editSelectedCourse);
+        var esc = vm.editSelectedCourse;
         vm.course.name = esc.name;
         vm.course.code = esc.code;
         vm.course.grade = esc.grade;
@@ -119,12 +128,17 @@
 
       initCourse(null);
       vm.editSelectedCourse = null;
+
+      vm.accordionArray = [];
     }
 
-    function confirmDeleteCourse() {
+    function confirmDeleteCourse(index) {
+      vm.deleteSelectedCourse = vm.listCourses[index];
+
       // Verify if deleteSelectedCourse exist
       if (vm.deleteSelectedCourse !== null) {
-        var deletedCourse = JSON.parse(vm.deleteSelectedCourse);
+        // var deletedCourse = JSON.parse(vm.deleteSelectedCourse);
+        var deletedCourse = vm.deleteSelectedCourse;
 
         if (confirm('Are you sure to delete -->> ' + deletedCourse.name + ' <<-- Course?')) {
 
@@ -155,6 +169,8 @@
       navService.setDefautlOptTitle();
       vm.actionCourseTitle = navService.getTitleOptionActive();
       resetContentActive();
+
+      vm.accordionArray = [];
     }
 
     /* 
@@ -213,7 +229,8 @@
     function initCourse(action) {
       if (vm.editSelectedCourse && action == 'Edit') {
         
-        var c = JSON.parse(vm.editSelectedCourse);
+        // var c = JSON.parse(vm.editSelectedCourse);
+        var c = vm.editSelectedCourse;
         // vm.course.id = c.id;
         vm.course.name = c.name;
         vm.course.code = c.code;

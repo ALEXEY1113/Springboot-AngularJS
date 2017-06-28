@@ -10,6 +10,8 @@
     var vm = this;
 
     vm.$onInit = function() {
+      vm.accordionArrayTasks =[];
+
       initTask(null);
       
       vm.listTasks = null;
@@ -49,11 +51,12 @@
     function createNewTask(task) {
       vm.task = task;
       
-      console.log('Task is: ', vm.task);
+      // console.log('Task is: ', vm.task);
 
       var idTask = null;
       if (vm.editSelectedTask) {
-        var est = JSON.parse(vm.editSelectedTask);
+        // var est = JSON.parse(vm.editSelectedTask);
+        var est = vm.editSelectedTask;
         idTask = est.id;
       }
 
@@ -89,6 +92,7 @@
       initTask(null);
       vm.btnEditTaskPressed = false;
       vm.editSelectedTask = null;
+      vm.accordionArrayTasks = [];
     }
     function cancelAddTask() {
       navService.setDefautlOptTitle();
@@ -97,14 +101,19 @@
       
       initTask(null);
       vm.editSelectedTask = null;
+
+      vm.accordionArrayTasks = [];
     }
 
-    function confirmEditTask() {
+    function confirmEditTask(index) {
       // console.log('EditSelectedTask: ', vm.editSelectedTask);
+      vm.editSelectedTask = vm.listTasks[index];
+
       if (vm.editSelectedTask) {
         vm.btnEditTaskPressed = true;
 
-        var est = JSON.parse(vm.editSelectedTask);
+        // var est = JSON.parse(vm.editSelectedTask);
+        var est = vm.editSelectedTask;
         vm.task.name = est.name;
         vm.task.state = est.state;
         vm.task.description = est.description;
@@ -120,12 +129,17 @@
 
       initTask(null);
       vm.editSelectedTask = null;
+
+      vm.accordionArrayTasks = [];
     }
 
-    function confirmDeleteTask() {
+    function confirmDeleteTask(index) {
+      vm.deleteSelectedTask = vm.listTasks[index];
+
       // Verify if deleteSelectedTask exist
       if (vm.deleteSelectedTask !== null) {
-        var deletedTask = JSON.parse(vm.deleteSelectedTask);
+        // var deletedTask = JSON.parse(vm.deleteSelectedTask);
+        var deletedTask = vm.deleteSelectedTask;
 
         if (confirm('Are you sure to delete -->> ' + deletedTask.name + ' <<-- Task?')) {
 
@@ -138,6 +152,8 @@
                               vm.alertDivContent = navService.getDivAlert('success', 'Task was Deleted.');
                               vm.deletedTaskSuccess = taskFactory.getVarDeletedTaskSuccess();
                               refreshListTasks();
+
+                              console.log('Deleted?', response);
 
                               if (vm.deletedTaskSuccess) {
                                 alert('Task was Deleted.');
@@ -156,6 +172,8 @@
       navService.setDefautlOptTitle();
       vm.actionTaskTitle = navService.getTitleOptionActive();
       resetContentActive();
+
+      vm.accordionArrayTasks = [];
     }
 
     /* 
@@ -214,7 +232,8 @@
     function initTask(action) {
       if (vm.editSelectedTask && action == 'Edit') {
         
-        var t = JSON.parse(vm.editSelectedTask);
+        // var t = JSON.parse(vm.editSelectedTask);
+        var t = vm.editSelectedTask;
         vm.task.name = t.name;
         vm.task.state = t.state;
         vm.task.description = t.description;

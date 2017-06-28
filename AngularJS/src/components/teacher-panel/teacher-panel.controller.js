@@ -10,6 +10,8 @@
     var vm = this;
 
     vm.$onInit = function() {
+      vm.accordionArrayTeachers = [];
+
       initTeacher(null);
       
       vm.listTeachers = null;
@@ -51,7 +53,8 @@
       
       var idTeacher = null;
       if (vm.editSelectedTeacher) {
-        var estchr = JSON.parse(vm.editSelectedTeacher);
+        // var estchr = JSON.parse(vm.editSelectedTeacher);
+        var estchr = vm.editSelectedTeacher;
         idTeacher = estchr.id;
       }
 
@@ -87,6 +90,7 @@
       initTeacher(null);
       vm.btnEditTeacherPressed = false;
       vm.editSelectedTeacher = null;
+      vm.accordionArrayTeachers = [];
     }
     function cancelAddTeacher() {
       navService.setDefautlOptTitle();
@@ -95,14 +99,19 @@
       
       initTeacher(null);
       vm.editSelectedTeacher = null;
+
+      vm.accordionArrayTeachers = [];
     }
 
-    function confirmEditTeacher() {
+    function confirmEditTeacher(index) {
+      vm.editSelectedTeacher = vm.listTeachers[index];
+
       // console.log('EditSelectedTeacher: ', vm.editSelectedTeacher);
       if (vm.editSelectedTeacher) {
         vm.btnEditTeacherPressed = true;
 
-        var estchr = JSON.parse(vm.editSelectedTeacher);
+        // var estchr = JSON.parse(vm.editSelectedTeacher);
+        var estchr = vm.editSelectedTeacher;
         vm.teacher.code = estchr.code;
         vm.teacher.name = estchr.name;
         vm.teacher.lastname = estchr.lastname;
@@ -122,12 +131,17 @@
 
       initTeacher(null);
       vm.editSelectedTeacher = null;
+
+      vm.accordionArrayTeachers = [];
     }
 
-    function confirmDeleteTeacher() {
+    function confirmDeleteTeacher(index) {
+      vm.deleteSelectedTeacher = vm.listTeachers[index];
+
       // Verify if deleteSelectedTeacher exist
       if (vm.deleteSelectedTeacher !== null) {
-        var deletedTeacher = JSON.parse(vm.deleteSelectedTeacher);
+        // var deletedTeacher = JSON.parse(vm.deleteSelectedTeacher);
+        var deletedTeacher = vm.deleteSelectedTeacher;
 
         if (confirm('Are you sure to delete -->> ' + deletedTeacher.name + ' <<-- Teacher?')) {
 
@@ -158,6 +172,8 @@
       navService.setDefautlOptTitle();
       vm.actionTeacherTitle = navService.getTitleOptionActive();
       resetContentActive();
+
+      vm.accordionArrayTeachers = [];
     }
 
     /* 
@@ -216,7 +232,8 @@
     function initTeacher(action) {
       if (vm.editSelectedTeacher && action == 'Edit') {
         
-        var tea = JSON.parse(vm.editSelectedTeacher);
+        // var tea = JSON.parse(vm.editSelectedTeacher);
+        var tea = vm.editSelectedTeacher;
         vm.teacher.code = tea.code;
         vm.teacher.name = tea.name;
         vm.teacher.lastname = tea.lastname;

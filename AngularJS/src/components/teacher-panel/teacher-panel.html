@@ -22,6 +22,11 @@
       font-size: 16px;
     }
     
+    #accordionGroup {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -39,8 +44,6 @@
       <h4>Options</h4>
       <ul class="nav nav-pills nav-stacked">
         <li ng-class="{active : $ctrl.activeMenuTeacher === 'Add'}"><a href ng-click="$ctrl.addOption()">Add Teacher</a></li>
-        <li ng-class="{active : $ctrl.activeMenuTeacher === 'Edit'}"><a href ng-click="$ctrl.editOption()">Edit Teacher</a></li>
-        <li ng-class="{active : $ctrl.activeMenuTeacher === 'Delete'}"><a href ng-click="$ctrl.deleteOption()">Delete Teacher</a></li>
         <li ng-class="{active : $ctrl.activeMenuTeacher === 'List'}"><a href ng-click="$ctrl.listOption()">List Teacher</a></li>
       </ul>
       <br>
@@ -53,33 +56,35 @@
       <div id="addTeacher" class="col-sm-offset-1 col-md-offset-1 col-sm-8 col-md-8" ng-if="$ctrl.contentActive === 'Add'">
         <form name="addNewTeacher">
           <div class="form-group">
-              <label for="codeTeacher">Code:</label>
+              <label for="codeTeacher">*Code:</label>
               <input type="text" class="form-control" id="codeTeacher" placeholder="Eg. 23366" ng-model="$ctrl.teacher.code" required>
           </div>
           <div class="form-group">
-              <label for="nameTeacher">Name:</label>
+              <label for="nameTeacher">*Name:</label>
               <input type="text" class="form-control" id="nameTeacher" placeholder="Eg. Ken" ng-model="$ctrl.teacher.name" required>
           </div>
           <div class="form-group">
-              <label for="lastnameTeacher">Lastname:</label>
+              <label for="lastnameTeacher">*Lastname:</label>
               <input type="text" class="form-control" id="lastnameTeacher" placeholder="Eg. Carter" ng-model="$ctrl.teacher.lastname" required>
           </div>
           <div class="form-group">
-              <label for="emailTeacher">Email:</label>
+              <label for="emailTeacher">*Email:</label>
               <input type="email" class="form-control" id="emailTeacher" placeholder="Eg. coach_carter@aol.com" ng-model="$ctrl.teacher.email" required>
           </div>
           <div class="form-group">
-              <label for="phoneTeacher">Phone:</label>
+              <label for="phoneTeacher">*Phone:</label>
               <input type="number" class="form-control" id="phoneTeacher" placeholder="Eg. 65987532" ng-model="$ctrl.teacher.phone" required>
           </div>
           <div class="form-group">
-              <label for="addressTeacher">Address:</label>
+              <label for="addressTeacher">*Address:</label>
               <input type="text" class="form-control" id="addressTeacher" placeholder="Eg. Richmond, California #4616" ng-model="$ctrl.teacher.address" required>
           </div>
           <div class="form-group">
-              <label for="salaryTeacher">Salary:</label>
+              <label for="salaryTeacher">*Salary:</label>
               <input type="number" class="form-control" id="salaryTeacher" placeholder="Eg. 54000" ng-model="$ctrl.teacher.salary" required>
           </div>
+          <p class="alert alert-warning">Fields with simbol (*) are required</p>
+
           <button type="button" class="btn btn-success" ng-click="$ctrl.createNewTeacher($ctrl.teacher)" ng-disabled="addNewTeacher.$invalid">Save Teacher</button>
           <button type="button" class="btn btn-default" ng-click="$ctrl.cancelAddTeacher()">Cancel</button>
         </form>
@@ -88,106 +93,43 @@
         </div>
       </div>
 
-      <div id="editTeacher" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Edit'">
-        <div ng-if="$ctrl.alertDivContent.type === 'success'">
-          <div class="panel panel-title">
-            <div class="row">
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">Code</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">Lastname</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Email</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Phone</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Address</div>
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">Salary</div>
-            </div>
-          </div>
-          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="teacher in $ctrl.listTeachers" style="background: white; margin-top: 0px;">
-            <div class="row">
-              <div class="col-sm-1 col-md-1 checkbox" style="margin-top: 0px;">
-                <input type="radio" name="teacher.id" ng-model="$ctrl.editSelectedTeacher" value="{{teacher}}">
-              </div>
-              <div class="col-sm-1 col-md-1" style="text-align:center;"> {{teacher.code}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.name}} </div>
-              <div class="col-sm-1 col-md-1" style="text-align:center;"> {{teacher.lastname}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.email}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.phone}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.address}} </div>
-              <div class="col-sm-1 col-md-1" style="text-align:center;"> {{teacher.salary}} </div>
-            </div>
-          </div>
-          <p>
-            <button type="button" class="btn btn-warning" ng-click="$ctrl.confirmEditTeacher()">Edit Teacher</button>
-            <button type="button" class="btn" ng-click="$ctrl.cancelEditTeacher()">Cancel</button>
-          </p>
-        </div>
-        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
-          <span>{{$ctrl.alertDivContent.msg}}</span>
-        </div>
-      </div>
-
-      <div id="deleteTeacher" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Delete'">
-        <div ng-if="$ctrl.alertDivContent.type === 'success'">
-          <div class="panel panel-title">
-            <div class="row">
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">Code</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">Lastname</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Email</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Phone</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Address</div>
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">Salary</div>
-            </div>
-          </div>
-          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="teacher in $ctrl.listTeachers" style="background: white; margin-top: 0px;">
-            <div class="row">
-              <div class="col-sm-1 col-md-1 checkbox" style="margin-top: 0px;">
-                <input type="radio" name="teacher.id" ng-model="$ctrl.deleteSelectedTeacher" value="{{teacher}}">
-              </div>
-              <div class="col-sm-1 col-md-1" style="text-align:center;"> {{teacher.code}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.name}} </div>
-              <div class="col-sm-1 col-md-1" style="text-align:center;"> {{teacher.lastname}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.email}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.phone}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.address}} </div>
-              <div class="col-sm-1 col-md-1" style="text-align:center;"> {{teacher.salary}} </div>
-            </div>
-          </div>
-          <p>
-            <button type="button" class="btn btn-danger" ng-click="$ctrl.confirmDeleteTeacher()">Delete Teacher</button>
-            <button type="button" class="btn" ng-click="$ctrl.cancelDeleteTeacher()">Cancel</button>
-          </p>
-        </div>
-        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
-          <span>{{$ctrl.alertDivContent.msg}}</span>
-        </div>
-      </div>
-      
       <div id="listTeacher" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'List'">
+        
         <div ng-if="$ctrl.alertDivContent.type === 'success'">
+          
           <div class="panel panel-title">
             <div class="row">
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">Code</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Lastname</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Email</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Phone</div>
-              <div class="col-sm-2 col-md-2" style="background: green; font-weight: bold; text-align: center; color:white;">Address</div>
-              <div class="col-sm-1 col-md-1" style="background: green; font-weight: bold; text-align: center; color:white;">Salary</div>
+              <div class="col-sm-7" style="background: green; font-weight: bold; text-align: center; color:white;">Teachers</div>
+              <div class="col-sm-5" style="background: green; font-weight: bold; text-align: center; color:white;">Actions</div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="teacher in $ctrl.listTeachers" style="background: white; margin-top: 0px;">
-              <div class="col-sm-1 col-md-1" style="text-align:center;"> {{teacher.code}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.name}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.lastname}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.email}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.phone}} </div>
-              <div class="col-sm-2 col-md-2" style="text-align:center;"> {{teacher.address}} </div>
-              <div class="col-sm-1 col-md-1" style="text-align:center;"> {{teacher.salary}} </div>
+          
+          <uib-accordion close-others="true">
+            <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="teacher in $ctrl.listTeachers track by $index" style="background: white; margin-top: 0px;">
+              <div id="accordionGroup" uib-accordion-group class="panel panel-default col-sm-7 col-md-8" is-open="$ctrl.accordionArrayTeachers[$index]">
+
+                <uib-accordion-heading>
+                  <strong>Code: </strong>{{teacher.code}},  <strong>Name: </strong>{{teacher.name}} {{teacher.lastname}}
+                </uib-accordion-heading>
+                <div class="row col-sm-12 col-md-12">
+                  <div><strong>Code: </strong> {{teacher.code}} </div>
+                  <div><strong>Name: </strong> {{teacher.name}} </div>
+                  <div><strong>Lastname: </strong> {{teacher.lastname}} </div>
+                  <div><strong>Email: </strong> {{teacher.email}} </div>
+                  <div><strong>Phone: </strong> {{teacher.phone}} </div>
+                  <div><strong>Address: </strong> {{teacher.address}} </div>
+                  <div><strong>Salary: </strong> $ {{teacher.salary}} </div>
+                </div>
+
+              </div>
+              <div class="col-sm-5 col-md-4" style="display: flex; justify-content: space-around;">
+                <button class="pull-right btn btn-primary" ng-click="$ctrl.accordionArrayTeachers[$index] = !$ctrl.accordionArrayTeachers[$index]">+ Info</button>
+                <button class="pull-right btn btn-warning" ng-click="$ctrl.confirmEditTeacher($index)">Edit</button>
+                <button class="pull-right btn btn-danger" ng-click="$ctrl.confirmDeleteTeacher($index)">Delete</button>
+              </div>
             </div>
-          </div>
+          </uib-accordion>
+
         </div>
 
         <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'danger'">

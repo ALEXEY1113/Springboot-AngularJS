@@ -10,6 +10,8 @@
     var vm = this;
 
     vm.$onInit = function() {
+      vm.accordionArrayStudents = [];
+
       initStudent(null);
       
       vm.listStudents = null;
@@ -51,14 +53,15 @@
       
       var idStudent = null;
       if (vm.editSelectedStudent) {
-        var est = JSON.parse(vm.editSelectedStudent);
+        // var est = JSON.parse(vm.editSelectedStudent);
+        var est = vm.editSelectedStudent;
         idStudent = est.id;
       }
 
       if (vm.editSelectedStudent && vm.btnEditStudentPressed) {
         // It's an Edition
         // console.log('Edit student', vm.btnEditStudentPressed);
-        
+
         studentFactory.editStudent(idStudent, vm.student)
                         .then(function (response) {
                           // Success
@@ -87,6 +90,7 @@
       initStudent(null);
       vm.btnEditStudentPressed = false;
       vm.editSelectedStudent = null;
+      vm.accordionArrayStudents = [];
     }
     function cancelAddStudent() {
       navService.setDefautlOptTitle();
@@ -95,14 +99,19 @@
       
       initStudent(null);
       vm.editSelectedStudent = null;
+
+      vm.accordionArrayStudents = [];
     }
 
-    function confirmEditStudent() {
+    function confirmEditStudent(index) {
       // console.log('EditSelectedStudent: ', vm.editSelectedStudent);
+      vm.editSelectedStudent = listStudents[index];
+
       if (vm.editSelectedStudent) {
         vm.btnEditStudentPressed = true;
 
-        var est = JSON.parse(vm.editSelectedStudent);
+        // var est = JSON.parse(vm.editSelectedStudent);
+        var est = vm.editSelectedStudent;
         vm.student.code = est.code;
         vm.student.name = est.name;
         vm.student.lastname = est.lastname;
@@ -121,12 +130,17 @@
 
       initStudent(null);
       vm.editSelectedStudent = null;
+
+      vm.accordionArrayStudents = [];
     }
 
-    function confirmDeleteStudent() {
+    function confirmDeleteStudent(index) {
+      vm.deleteSelectedStudent = vm.listStudents[index];
+
       // Verify if deleteSelectedstudent exist
       if (vm.deleteSelectedStudent !== null) {
-        var deletedStudent = JSON.parse(vm.deleteSelectedStudent);
+        // var deletedStudent = JSON.parse(vm.deleteSelectedStudent);
+        var deletedStudent = vm.deleteSelectedStudent;
 
         if (confirm('Are you sure to delete -->> ' + deletedStudent.name + ' <<-- Student?')) {
 
@@ -157,6 +171,8 @@
       navService.setDefautlOptTitle();
       vm.actionStudentTitle = navService.getTitleOptionActive();
       resetContentActive();
+
+      vm.accordionArrayStudents = [];
     }
 
     /* 
@@ -215,7 +231,8 @@
     function initStudent(action) {
       if (vm.editSelectedStudent && action == 'Edit') {
         
-        var est = JSON.parse(vm.editSelectedStudent);
+        // var est = JSON.parse(vm.editSelectedStudent);
+        var est = vm.editSelectedStudent;
         vm.student.code = est.code;
         vm.student.name = est.name;
         vm.student.lastname = est.lastname;

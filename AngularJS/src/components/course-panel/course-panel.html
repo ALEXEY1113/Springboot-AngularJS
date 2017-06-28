@@ -21,6 +21,11 @@
       text-align: center;
       font-size: 16px;
     }
+
+    #accordionGroup {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -33,14 +38,12 @@
   </style>
 
 <!--HTML-->
-<div class="container-fluid">
+<div class="container-fluid" style="margin-bottom: 100px;">
   <div class="row content">
     <div class="col-sm-3 sidenav">
       <h4>Options</h4>
       <ul class="nav nav-pills nav-stacked">
         <li ng-class="{active : $ctrl.activeMenuCourse === 'Add'}"><a href ng-click="$ctrl.addOption()">Add Course</a></li>
-        <li ng-class="{active : $ctrl.activeMenuCourse === 'Edit'}"><a href ng-click="$ctrl.editOption()">Edit Course</a></li>
-        <li ng-class="{active : $ctrl.activeMenuCourse === 'Delete'}"><a href ng-click="$ctrl.deleteOption()">Delete Course</a></li>
         <li ng-class="{active : $ctrl.activeMenuCourse === 'List'}"><a href ng-click="$ctrl.listOption()">List Courses</a></li>
       </ul>
       <br>
@@ -68,6 +71,9 @@
               <label for="descriptionCourse">Description:</label>
               <input type="text" class="form-control" id="descriptionCourse" placeholder="Eg. Designed for students with an interest in biology." ng-model="$ctrl.course.description">
           </div>
+
+          <p class="alert alert-warning">Fields with simbol (*) are required</p>
+
           <button type="button" class="btn btn-success" ng-click="$ctrl.createNewCourse($ctrl.course)" ng-disabled="addNewCourse.$invalid">Save Course</button>
           <button type="button" class="btn btn-default" ng-click="$ctrl.cancelAddCourse()">Cancel</button>
         </form>
@@ -75,83 +81,40 @@
           <span>{{$ctrl.alertDivContent.msg}}</span>
         </div>
       </div>
-
-      <div id="editCourse" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Edit'">
-        <div ng-if="$ctrl.alertDivContent.type === 'success'">
-          <div class="panel panel-title">
-            <div class="row">
-              <div class="col-sm-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
-              <div class="col-sm-2" style="background: green; font-weight: bold; text-align: center; color:white;">Code</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
-              <div class="col-sm-2" style="background: green; font-weight: bold; text-align: center; color:white;">Grade</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
-            </div>
-          </div>
-          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="course in $ctrl.listCourses" style="background: white; margin-top: 0px;">
-            <div class="col-sm-1 col-md-1 checkbox" style="margin-top: 0px;">
-              <input type="radio" name="course.id" ng-model="$ctrl.editSelectedCourse" value="{{course}}">
-            </div>
-            <div class="col-sm-2 col-md-2" style="text-align:center;"> {{course.code}} </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{course.name}} </div>
-            <div class="col-sm-2 col-md-2" style="text-align:center;"> {{course.grade}} </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{course.description}} </div>
-          </div>
-          <p>
-            <button type="button" class="btn btn-warning" ng-click="$ctrl.confirmEditCourse()">Edit Course</button>
-            <button type="button" class="btn" ng-click="$ctrl.cancelEditCourse()">Cancel</button>
-          </p>
-        </div>
-        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
-          <span>{{$ctrl.alertDivContent.msg}}</span>
-        </div>
-      </div>
-
-      <div id="deleteCourse" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'Delete'">
-        <div ng-if="$ctrl.alertDivContent.type === 'success'">
-          <div class="panel panel-title">
-            <div class="row">
-              <div class="col-sm-1" style="background: green; font-weight: bold; text-align: center; color:white;">#</div>
-              <div class="col-sm-2" style="background: green; font-weight: bold; text-align: center; color:white;">Code</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
-              <div class="col-sm-2" style="background: green; font-weight: bold; text-align: center; color:white;">Grade</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
-            </div>
-          </div>
-          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="course in $ctrl.listCourses" style="background: white; margin-top: 0px;">
-            <div class="col-sm-1 col-md-1 checkbox" style="margin-top: 0px;">
-              <input type="radio" name="course.id" ng-model="$ctrl.deleteSelectedCourse" value="{{course}}">
-            </div>
-            <div class="col-sm-2 col-md-2" style="text-align:center;"> {{course.code}} </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{course.name}} </div>
-            <div class="col-sm-2 col-md-2" style="text-align:center;"> {{course.grade}} </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{course.description}} </div>
-          </div>
-          <p>
-            <button type="button" class="btn btn-danger" ng-click="$ctrl.confirmDeleteCourse()">Delete Course</button>
-            <button type="button" class="btn" ng-click="$ctrl.cancelDeleteCourse()">Cancel</button>
-          </p>
-        </div>
-        <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'warning' || $ctrl.alertDivContent.type === 'danger'">
-          <span>{{$ctrl.alertDivContent.msg}}</span>
-        </div>
-      </div>
       
       <div id="listCourse" class="col-sm-12 col-md-12" ng-if="$ctrl.contentActive === 'List'">
+
         <div ng-if="$ctrl.alertDivContent.type === 'success'">
+          
           <div class="panel panel-title">
             <div class="row">
-              <div class="col-sm-2" style="background: green; font-weight: bold; text-align: center; color:white;">Code</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Name</div>
-              <div class="col-sm-2" style="background: green; font-weight: bold; text-align: center; color:white;">Grade</div>
-              <div class="col-sm-3" style="background: green; font-weight: bold; text-align: center; color:white;">Description</div>
+              <div class="col-sm-7" style="background: green; font-weight: bold; text-align: center; color:white;">Courses</div>
+              <div class="col-sm-5" style="background: green; font-weight: bold; text-align: center; color:white;">Actions</div>
             </div>
           </div>
-          <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="course in $ctrl.listCourses" style="background: white; margin-top: 0px;">
-            <div class="col-sm-2 col-md-2" style="text-align:center;"> {{course.code}} </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{course.name}} </div>
-            <div class="col-sm-2 col-md-2" style="text-align:center;"> {{course.grade}} </div>
-            <div class="col-sm-3 col-md-3" style="text-align:center;"> {{course.description}} </div>
-          </div>
+
+          <uib-accordion close-others="true">
+            <div class="col-md-12 col-sm-12 panel panel-collapse" ng-repeat="course in $ctrl.listCourses track by $index" style="background: white; margin-top: 0px;">
+              <div id="accordionGroup" uib-accordion-group class="panel panel-default col-sm-7 col-md-8" is-open="$ctrl.accordionArray[$index]">
+
+                <uib-accordion-heading>
+                  <strong>Code: </strong>{{course.code}},  <strong>Name: </strong>{{course.name}}
+                </uib-accordion-heading>
+                <div class="row col-sm-12 col-md-12">
+                  <div><strong>Code: </strong> {{course.code}} </div>
+                  <div><strong>Name: </strong> {{course.name}} </div>
+                  <div><strong>Grade: </strong> {{course.grade}} </div>
+                  <div><strong>Description: </strong> {{course.description}} </div>
+                </div>
+
+              </div>
+              <div class="col-sm-5 col-md-4" style="display: flex; justify-content: space-around;">
+                <button class="pull-right btn btn-primary" ng-click="$ctrl.accordionArray[$index] = !$ctrl.accordionArray[$index]">+ Info</button>
+                <button class="pull-right btn btn-warning" ng-click="$ctrl.confirmEditCourse($index)">Edit</button>
+                <button class="pull-right btn btn-danger" ng-click="$ctrl.confirmDeleteCourse($index)">Delete</button>
+              </div>
+            </div>
+          </uib-accordion>
         </div>
 
         <div ng-class="'alert alert-' + $ctrl.alertDivContent.type" ng-if="$ctrl.alertDivContent.type === 'danger'">

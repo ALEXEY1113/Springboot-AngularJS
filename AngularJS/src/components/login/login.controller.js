@@ -14,24 +14,29 @@
     // Variables que se podrán mostrar en la vista
     vm.email = '';
     vm.password = '';
-    vm.displayMessage = false;
+    vm.displayMessage = {
+                          show: false,
+                          msg: ''
+                        };
 
     vm.areEmptyFields = function() {
       if (!vm.email || !vm.password) {
-        vm.displayMessage = true;
-        console.log('One field is empty : dm=' + vm.displayMessage);
+        vm.displayMessage.show = true;
+        vm.displayMessage.msg = 'One field is empty...';
+        // console.log('One field is empty : dm=' + vm.displayMessage);
         return true;
       } else {
-        console.log('Credentials: ', vm.email, vm.password);
+        // console.log('Credentials: ', vm.email, vm.password);
         loginFactory.loginUser(vm.email, vm.password, function(response) {
-          console.log('1erResponse: ', response);
+          // console.log('1erResponse: ', response);
           if (response.success) {
-            console.log('2doResponse: ', response);
+            // console.log('2doResponse: ', response);
             // LoginFactory.setCredentials(vm.email.password);
             $location.path('/admin-control');
             return false;
           } else {
-            vm.displayMessage = true;
+            vm.displayMessage.show = true;
+            vm.displayMessage.msg = response.message;
             return true;
           }
         });
