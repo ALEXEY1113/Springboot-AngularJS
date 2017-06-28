@@ -153,7 +153,7 @@
       getAllSubTask();
     }
     function cancelSubTask() {
-      console.log('Cancel Subscription Task');
+      // console.log('Cancel Subscription Task');
       initSelectionDefault();
     }
 

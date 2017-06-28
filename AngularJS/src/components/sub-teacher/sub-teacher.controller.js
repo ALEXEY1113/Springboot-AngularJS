@@ -117,7 +117,7 @@
       getAllSubTeacher();
     }
     function cancelSubTeacher() {
-      console.log('Cancel Subscription Teacher');
+      // console.log('Cancel Subscription Teacher');
       initSelectionDefault();
     }
 

@@ -51,9 +51,11 @@ public class TeacherService {
             response = true;
         } else {
 
+            String subscriptionTeacherID = null;
             for (int i = 0; i < subscriptionTeachers.size() && !teacherOk; i++) {
 
                 SubscriptionTeachers sub = subscriptionTeachers.get(i);
+                subscriptionTeacherID = sub.getId();
                 if (sub.getTeacher().getId().equals(idTeacher)) {
 
                     String idCourse = sub.getCourse().getId();
@@ -63,8 +65,9 @@ public class TeacherService {
             }
 
             if (!teacherOk) {
+                // Delete Teacher
                 mTeacherRepository.delete(idTeacher);
-                cleanTeacherEmpty(subscriptionTeachers);
+                cleanTeacherEmpty(idTeacher, subscriptionTeachers);
                 response = true;
             }
         }
@@ -111,12 +114,12 @@ public class TeacherService {
         return founded;
     }
 
-    private void cleanTeacherEmpty(List<SubscriptionTeachers> subsTeachers) {
+    private void cleanTeacherEmpty(String idTeacher, List<SubscriptionTeachers> subsTeachers) {
 
         for (int i = 0; i < subsTeachers.size(); i++) {
             SubscriptionTeachers sub = subsTeachers.get(i);
 
-            if(sub.getTeacher() == null) {
+            if(sub.getTeacher().getId().equals(idTeacher)) {
                 mSubTeacherRepository.delete(sub.getId());
             }
         }

@@ -213,6 +213,12 @@
     }
 
     function listOption() {
+      vm.btnEditCoursePressed = false;
+      vm.deleteSelectedCourse = null;
+      vm.editSelectedCourse = null;
+      vm.accordionArray = [];
+      initCourse(null);
+
       setDefaultAlertDiv();
       // change options selection
       setOptionSelected('List');

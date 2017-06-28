@@ -105,7 +105,7 @@
 
     function confirmEditStudent(index) {
       // console.log('EditSelectedStudent: ', vm.editSelectedStudent);
-      vm.editSelectedStudent = listStudents[index];
+      vm.editSelectedStudent = vm.listStudents[index];
 
       if (vm.editSelectedStudent) {
         vm.btnEditStudentPressed = true;
@@ -113,6 +113,7 @@
         // var est = JSON.parse(vm.editSelectedStudent);
         var est = vm.editSelectedStudent;
         vm.student.code = est.code;
+        vm.student.ci = est.ci;
         vm.student.name = est.name;
         vm.student.lastname = est.lastname;
         vm.student.email = est.email;
@@ -215,6 +216,12 @@
     }
 
     function listOption() {
+      vm.btnEditStudentPressed = false;
+      vm.deleteSelectedStudent = null;
+      vm.editSelectedStudent = null;
+      vm.accordionArrayStudents = [];
+      initStudent(null);
+
       setDefaultAlertDiv();
       // change options selection
       setOptionSelected('List');
@@ -234,6 +241,7 @@
         // var est = JSON.parse(vm.editSelectedStudent);
         var est = vm.editSelectedStudent;
         vm.student.code = est.code;
+        vm.student.ci = est.ci;
         vm.student.name = est.name;
         vm.student.lastname = est.lastname;
         vm.student.email = est.email;

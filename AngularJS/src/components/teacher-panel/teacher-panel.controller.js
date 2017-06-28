@@ -113,6 +113,7 @@
         // var estchr = JSON.parse(vm.editSelectedTeacher);
         var estchr = vm.editSelectedTeacher;
         vm.teacher.code = estchr.code;
+        vm.teacher.ci = estchr.ci;
         vm.teacher.name = estchr.name;
         vm.teacher.lastname = estchr.lastname;
         vm.teacher.email = estchr.email;
@@ -216,6 +217,12 @@
     }
 
     function listOption() {
+      vm.btnEditTeacherPressed = false;
+      vm.deleteSelectedTeacher = null;
+      vm.editSelectedTeacher = null;
+      vm.accordionArrayTeachers = [];
+      initTeacher(null);
+
       setDefaultAlertDiv();
       // change options selection
       setOptionSelected('List');
@@ -235,6 +242,7 @@
         // var tea = JSON.parse(vm.editSelectedTeacher);
         var tea = vm.editSelectedTeacher;
         vm.teacher.code = tea.code;
+        vm.teacher.ci = tea.ci;
         vm.teacher.name = tea.name;
         vm.teacher.lastname = tea.lastname;
         vm.teacher.email = tea.email;

@@ -117,7 +117,7 @@
       getAllSubStudent();
     }
     function cancelSubStudent() {
-      console.log('Cancel Subscription Student');
+      // console.log('Cancel Subscription Student');
       initSelectionDefault();
     }
 

@@ -60,6 +60,10 @@
               <input type="number" class="form-control" id="codeStudent" placeholder="Eg. 23366" ng-model="$ctrl.student.code" required>
           </div>
           <div class="form-group">
+              <label for="ciStudent">*Ci:</label>
+              <input type="number" class="form-control" id="ciStudent" placeholder="Eg. 23623366" ng-model="$ctrl.student.ci" required>
+          </div>
+          <div class="form-group">
               <label for="nameStudent">*Name:</label>
               <input type="text" class="form-control" id="nameStudent" placeholder="Eg. Jhon" ng-model="$ctrl.student.name" required>
           </div>
@@ -109,6 +113,7 @@
                 </uib-accordion-heading>
                 <div class="row col-sm-12 col-md-12">
                   <div><strong>Code: </strong> {{student.code}} </div>
+                  <div><strong>Ci: </strong> {{student.ci}} </div>
                   <div><strong>Name: </strong> {{student.name}} </div>
                   <div><strong>Lastname: </strong> {{student.lastname}} </div>
                   <div><strong>Email: </strong> {{student.email}} </div>

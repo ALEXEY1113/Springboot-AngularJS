@@ -216,6 +216,12 @@
     }
 
     function listOption() {
+      vm.btnEditTaskPressed = false;
+      vm.deleteSelectedTask = null;
+      vm.editSelectedTask = null;
+      vm.accordionArrayTasks = [];
+      initTask(null);
+
       setDefaultAlertDiv();
       // change options selection
       setOptionSelected('List');
