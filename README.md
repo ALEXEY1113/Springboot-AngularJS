@@ -19,8 +19,8 @@ The "Persistence" use MongoDB but you need to install, configure in backend for 
 
 ### First Run
   Go to into folder called Spring Boot and type:
-    1. mvn clean package
-    2. java -jar /target/(name_ of _file _generated).jar
+    * mvn clean package
+    * java -jar /target/(name_ of _file _generated).jar
   For you correctly run verify if the Swagger Ui is running
     * In your browser type "http://localhost:8080/swagger-ui.html"
 
@@ -34,9 +34,9 @@ The "Persistence" use MongoDB but you need to install, configure in backend for 
 
 ### First Run
   Go to into folder called AngularJS and type:
-    1. npm install
-    2. bower install
-    3. gulp -> (then the UI will open in Chrome Browser)
+    * npm install
+    * bower install
+    * gulp -> (then the UI will open in Chrome Browser)
 
 ---
 
@@ -47,4 +47,4 @@ The "Persistence" use MongoDB but you need to install, configure in backend for 
 
 ### First Run
   Go to into main folder and type:
-    1. mongod --dbpath /name-of-your-folder-name-where-you-want-to-save-the-data
+    * mongod --dbpath /name-of-your-folder-name-where-you-want-to-save-the-data
